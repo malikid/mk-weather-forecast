@@ -1,31 +1,33 @@
-Welcome to Glitch
+Frontend Coding Challenge Hopkins
 =================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+This challenge is about building a small interface that shows the weather of the next 3 days. As a user I would want to be able to use it to get the following information.
 
-Find out more [about Glitch](https://glitch.com/about).
+### Requirements
+1. In the morning I want to check the wether for today to make sure, that I can dress accordingly
+2. Sometimes when I leave home for the weekend, I want to make sure, that it's not too windy, as I have sensitive plants on my balcony that I would have to put into my flat otherwise.
+3. I am usually checking the wheather on my phone, so it should be responsive
 
+### Goal
+Come up with a nice interface that addresses the user's needs. 
 
-Your Project
-------------
-
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-This app has a database!
-- this app uses sqlite but you can power your apps with [a number of other storage options](https://glitch.com/storage)
-- `sqlite.db` is created and put into the `.data` folder, a hidden directory whose contents aren’t copied when a project is remixed. you can see the contents of `.data` in the console under "Logs"
+### Rules
+- Use React as the sorrunding framework
+- You are allowed to import other libraries for the interface such as MaterialUI, AntDesign, styled-components ...
+- Please do not spend more than 1 or 2 hours for this challenge.
+- Do all the editing within this glitch. This helps us to understand the steps you took better
 
 
-Made by [Glitch](https://glitch.com/)
--------------------
+### The API
+Please use the openweathermap API for this challenge
 
-\ ゜o゜)ノ
+**Documentation**
+```
+https://openweathermap.org/api/hourly-forecast
+```
+
+A sample call for the next 96 hours:
+```
+https://samples.openweathermap.org/data/2.5/forecast/hourly?q=Berlin,us&appid=b6907d289e10d714a6e88b30761fae22
+```
