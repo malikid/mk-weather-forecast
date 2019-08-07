@@ -1,7 +1,5 @@
 Frontend Coding Challenge Hopkins
 =================
-
-
 This challenge is about building a small interface that shows the weather of the next 3 days. As a user I would want to be able to use it to get the following information.
 
 ### Requirements
@@ -13,7 +11,7 @@ This challenge is about building a small interface that shows the weather of the
 Come up with a nice interface that addresses the user's needs. 
 
 ### Rules
-- Use React as the sorrunding framework
+- Use React as the sorrounding framework
 - You are allowed to import other libraries for the interface such as MaterialUI, AntDesign, styled-components ...
 - Please do not spend more than 1 or 2 hours for this challenge.
 - Do all the editing within this glitch. This helps us to understand the steps you took better
