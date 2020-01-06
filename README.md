@@ -5,7 +5,8 @@ This challenge is about building a small interface that shows the weather of the
 ### Requirements
 1. In the morning I want to check the wether for today to make sure, that I can dress accordingly
 2. Sometimes when I leave home for the weekend, I want to make sure, that it's not too windy, as I have sensitive plants on my balcony that I would have to put into my flat otherwise.
-3. I am usually checking the wheather on my phone, so it should be responsive
+3. I also want to be able to set whether i need rain or not. My plants should stay hydrated.
+4. I am usually checking the wheather on my phone, so it should be responsive
 
 ### Goal
 Come up with a nice interface that addresses the user's needs. 
