@@ -1,6 +1,7 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
 import {reduce, isEmpty, slice} from 'lodash';
+import moment from 'moment';
 
 import {API_KEY} from 'Config';
 
@@ -40,50 +41,37 @@ class WeatherPage {
   @computed
   get todayInfo() {
     const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
-    // {
-    //   "dt": 1553709600,
-    //   "main": {
-    //     "temp": 278.76,
-    //     "temp_min": 278.76,
-    //     "temp_max": 279.558,
-    //     "pressure": 1031.934,
-    //     "sea_level": 1031.934,
-    //     "grnd_level": 971.745,
-    //     "humidity": 100,
-    //     "temp_kf": -0.8
-    //   },
-    //   "weather": [{
-    //     "id": 803,
-    //     "main": "Clouds",
-    //     "description": "broken clouds",
-    //     "icon": "04n"
-    //   }],
-    //   "clouds": {
-    //     "all": 77
-    //   },
-    //   "wind": {
-    //     "speed": 1.6,
-    //     "deg": 40.932
-    //   },
-    //   "sys": {
-    //     "pod": "n"
-    //   },
-    //   "dt_txt": "2019-03-27 18:00:00"
-    // }
     const data = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
       // {
       //   type: '', // wind / cloud / temp / humid
       //   datetime: '', // timestemp to date + time
       //   value: ''  // value
       // }
+      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       result.push({
         type: 'temp',
         datetime,
-        value: hourlyInfo
+        value: hourlyInfo.main.temp
+      });
+      result.push({
+        type: 'humidity',
+        datetime,
+        value: hourlyInfo.main.humidity
+      });
+      result.push({
+        type: 'cloud',
+        datetime,
+        value: hourlyInfo.cloud.all
+      });
+      result.push({
+        type: 'wind',
+        datetime,
+        value: hourlyInfo.wind.speed
       });
       return result;
     }, []);
-    const result = {
+
+    return {
       title: {
         visible: false,
         text: 'Line Chart',
@@ -100,10 +88,64 @@ class WeatherPage {
       yAxis: { label: { formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) } },
       legend: { position: 'right-top' },
       seriesField: 'type',
-      color: ['#1979C9', '#D62A0D', '#FAA219'],
+      color: ['#1979C9', '#D62A0D', '#FAA219', '#FAA219'],
       responsive: true,
     };
-    return result;
+  }
+
+  @computed
+  get nextInfo() {
+    const nextHourlyInfoList = slice(this.hourlyInfoList, 12, 96);
+    const data = reduce(nextHourlyInfoList, (result, hourlyInfo) => {
+      // {
+      //   type: '', // wind / cloud / temp / humid
+      //   datetime: '', // timestemp to date + time
+      //   value: ''  // value
+      // }
+      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
+      result.push({
+        type: 'temp',
+        datetime,
+        value: hourlyInfo.main.temp
+      });
+      result.push({
+        type: 'humidity',
+        datetime,
+        value: hourlyInfo.main.humidity
+      });
+      result.push({
+        type: 'cloud',
+        datetime,
+        value: hourlyInfo.cloud.all
+      });
+      result.push({
+        type: 'wind',
+        datetime,
+        value: hourlyInfo.wind.speed
+      });
+      return result;
+    }, []);
+
+    return {
+      title: {
+        visible: false,
+        text: 'Line Chart',
+      },
+      description: {
+        visible: false,
+        text: '',
+      },
+      padding: 'auto',
+      forceFit: true,
+      data,
+      xField: 'datetime',
+      yField: 'value',
+      yAxis: { label: { formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) } },
+      legend: { position: 'right-top' },
+      seriesField: 'type',
+      color: ['#1979C9', '#D62A0D', '#FAA219', '#FAA219'],
+      responsive: true,
+    };
   }
 
   @action
