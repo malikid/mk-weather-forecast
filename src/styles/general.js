@@ -12,9 +12,10 @@ export const Card = styled.div`
   align-items: center;
   justify-content: center;
 
+  position: relative;
+
   &:after{
     content: '';
     display: block;
-    padding-bottom: 50%;
   }
 `;

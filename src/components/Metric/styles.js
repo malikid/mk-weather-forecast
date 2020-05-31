@@ -7,9 +7,13 @@ export const Container = styled(Card)`
 `;
 
 export const Title = styled.div`
-  font-size: large;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: x-small;;
+  font-weight: bold;
 `;
 
 export const Description = styled.div`
-  font-size: small;
+  font-size: large;
 `;

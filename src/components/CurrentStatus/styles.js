@@ -10,4 +10,10 @@ export const  WeatherIcon = styled.img`
   object-fit: contain;
 `;
 
-export const  WeatherDescription = styled.div``;
+export const  WeatherDescription = styled.div`
+  font-size: xx-large;
+`;
+
+export const  WeatherDetail = styled.div`
+  font-size: medium;
+`;
