@@ -4,15 +4,17 @@ import axios from 'axios';
 import {API_KEY} from 'Config';
 
 class WeatherPage {
-  
+  @observable currentCity;
   @observable currentInfo = {};
   @observable todayHourlyInfo = [];
   @observable followingThreeDaysHourlyInfo = [];
 
-  @computed
-  get todayInfo() {
-    // TODO
-  }
+  // @computed
+  // get todayInfo() {
+  // }
+
+  @action
+  setCurrentCity = (value) => (this.currentCity = value);
 
   @action
   setCurrentInfo = (value) => (this.currentInfo = value);
@@ -3139,7 +3141,11 @@ class WeatherPage {
 "population": 1260391
 }
 };
-      // 
+      this.setCurrentCity(response.city.name);
+      let hourlyInfoList = response.list;
+      this.setCurrentInfo(hourlyInfoList[0]);
+      this.setTodayHourlyInfo(hourlyInfoList.splice(0, 24));
+      this.setFollowingThreeDaysHourlyInfo(hourlyInfoList);
     } catch(e) {
       console.error(e);
     }
