@@ -26,6 +26,8 @@ class WeatherPage {
   @observable loading = false;
   @observable currentCity;
   @observable hourlyInfoList = [];
+  @observable todayLineChartType = 'temp';
+  @observable nextLineChartType = 'temp';
 
   @computed
   get currentInfo() {
@@ -71,7 +73,6 @@ class WeatherPage {
     }
 
     const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
-
     const configs = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       
@@ -80,27 +81,27 @@ class WeatherPage {
         datetime,
         value: hourlyInfo.main.temp
       });
-      result.push({
+      result.humidity.data.push({
         type: 'humidity',
         datetime,
         value: hourlyInfo.main.humidity
       });
-      result.push({
+      result.clouds.data.push({
         type: 'cloud',
         datetime,
         value: hourlyInfo.clouds.all
       });
-      result.push({
+      result.wind.data.push({
         type: 'wind',
         datetime,
         value: hourlyInfo.wind.speed
       });
       return result;
     }, {
-      temp: this.generateBaseConfig(temp),
-      humidity: this.generateBaseConfig(humidity),
-      cloud: this.generateBaseConfig(cloud),
-      wind: this.generateBaseConfig(wind)
+      temp: this.generateBaseConfig('temp'),
+      humidity: this.generateBaseConfig('humidity'),
+      clouds: this.generateBaseConfig('clouds'),
+      wind: this.generateBaseConfig('wind')
     });
 
     return configs;
@@ -113,56 +114,38 @@ class WeatherPage {
     }
 
     const nextHourlyInfoList = slice(this.hourlyInfoList, 12, 96);
-    const data = reduce(nextHourlyInfoList, (result, hourlyInfo) => {
-      // {
-      //   type: '', // wind / cloud / temp / humid
-      //   datetime: '', // timestemp to date + time
-      //   value: ''  // value
-      // }
+    const configs = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
-      result.push({
+      
+      result.temp.data.push({
         type: 'temp',
         datetime,
         value: hourlyInfo.main.temp
       });
-      result.push({
+      result.humidity.data.push({
         type: 'humidity',
         datetime,
         value: hourlyInfo.main.humidity
       });
-      result.push({
+      result.clouds.data.push({
         type: 'cloud',
         datetime,
         value: hourlyInfo.clouds.all
       });
-      result.push({
+      result.wind.data.push({
         type: 'wind',
         datetime,
         value: hourlyInfo.wind.speed
       });
       return result;
-    }, []);
-
-    return {
-      title: {
-        visible: false,
-        text: 'Line Chart',
-      },
-      description: {
-        visible: false,
-        text: '',
-      },
-      padding: 'auto',
-      forceFit: true,
-      data,
-      xField: 'datetime',
-      yField: 'value',
-      yAxis: { label: { formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) } },
-      legend: { position: 'right-top' },
-      seriesField: 'type',
-      color: ['#1979C9', '#D62A0D', '#FAA219', '#FAA219'],
-      responsive: true,
-    };
+    }, {
+      temp: this.generateBaseConfig('temp'),
+      humidity: this.generateBaseConfig('humidity'),
+      clouds: this.generateBaseConfig('clouds'),
+      wind: this.generateBaseConfig('wind')
+    });
+    
+    return configs;
   }
 
   @action
@@ -176,6 +159,12 @@ class WeatherPage {
 
   @action
   setHourlyInfoList = (value) => (this.hourlyInfoList = value);
+
+  @action
+  setTodayLineChartType = (value) => (this.todayLineChartType = value);
+
+  @action
+  setNextLineChartType = (value) => (this.nextLineChartType = value);
 
   fetchWeatherData = async () => {
     this.setLoading(true);

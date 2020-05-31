@@ -6,12 +6,14 @@ import {Card} from 'Styles/general';
 
 class LineChart extends Component {
   render() {
+    const {type, config, onTypeChange} = this.props;
+    
     const menu = (
-      <Menu onClick={() => {}}>
-        <Menu.Item key="1">Temperature</Menu.Item>
-        <Menu.Item key="2">Humidity</Menu.Item>
-        <Menu.Item key="3">Clouds</Menu.Item>
-        <Menu.Item key="4">Wind</Menu.Item>
+      <Menu onClick={({key}) => {onTypeChange(key);}}>
+        <Menu.Item key="temp">Temperature</Menu.Item>
+        <Menu.Item key="humidity">Humidity</Menu.Item>
+        <Menu.Item key="clouds">Clouds</Menu.Item>
+        <Menu.Item key="wind">Wind</Menu.Item>
       </Menu>
     );
     
@@ -19,10 +21,10 @@ class LineChart extends Component {
       <Card>
         <Dropdown overlay={menu}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            Choose a type <DownOutlined />
+            Temperature <DownOutlined />
           </a>
         </Dropdown>
-        <Line {...this.props.config} />
+        <Line {...config[type]} />
       </Card>
     );
   }

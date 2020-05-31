@@ -25,7 +25,16 @@ class App extends Component {
   }
 
   render() {
-    const {loading, currentInfo, todayInfo, nextInfo} = this.props.store.weatherPage;
+    const {
+      loading,
+      currentInfo,
+      todayInfo,
+      nextInfo,
+      todayLineChartType,
+      nextLineChartType,
+      setTodayLineChartType,
+      setNextLineChartType
+    } = this.props.store.weatherPage;
     
     if(loading || isEmpty(currentInfo)) {
       return <Spin />;
@@ -57,10 +66,10 @@ class App extends Component {
           </Column>
         </CurrentContainer>
         <TodayContainer>
-          <LineChart config={todayInfo} />
+          <LineChart type={todayLineChartType} config={todayInfo} onTypeChange={setTodayLineChartType} />
         </TodayContainer>
         <NextContainer>
-          <LineChart config={nextInfo} />
+          <LineChart type={nextLineChartType} config={nextInfo} onTypeChange={setNextLineChartType} />
         </NextContainer>
       </PageContainer>
     );
