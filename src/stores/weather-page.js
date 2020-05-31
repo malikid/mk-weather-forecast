@@ -52,8 +52,8 @@ class WeatherPage {
       icon,
       temp: `${Math.trunc(parseInt(temp) - 273.15)}°C`,
       humidity: `${humidity}%`,
-      clouds: clouds && `${clouds.all}%`,
-      wind: wind && {
+      clouds: !isEmpty(clouds) && `${clouds.all}%`,
+      wind: !isEmpty(wind) && {
         speed: `${wind.speed} meter/sec`,
         degree: `${wind.degree} degrees`
       }
@@ -77,22 +77,18 @@ class WeatherPage {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       
       result.temp.data.push({
-        type: 'temp',
         datetime,
         value: hourlyInfo.main.temp
       });
       result.humidity.data.push({
-        type: 'humidity',
         datetime,
         value: hourlyInfo.main.humidity
       });
       result.clouds.data.push({
-        type: 'cloud',
         datetime,
         value: hourlyInfo.clouds.all
       });
       result.wind.data.push({
-        type: 'wind',
         datetime,
         value: hourlyInfo.wind.speed
       });
@@ -118,22 +114,18 @@ class WeatherPage {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       
       result.temp.data.push({
-        type: 'temp',
         datetime,
         value: hourlyInfo.main.temp
       });
       result.humidity.data.push({
-        type: 'humidity',
         datetime,
         value: hourlyInfo.main.humidity
       });
       result.clouds.data.push({
-        type: 'cloud',
         datetime,
         value: hourlyInfo.clouds.all
       });
       result.wind.data.push({
-        type: 'wind',
         datetime,
         value: hourlyInfo.wind.speed
       });
