@@ -28,11 +28,13 @@ class App extends Component {
       return <Spin />;
     }
     
+    const {} = currentInfo;
+    
     return (
       <PageContainer>
         <CurrentContainer>
           <CurrentStatusContainer>
-            <CurrentStatus />
+            <CurrentStatus mainDescription={mainDescription} detailDescription, icon/>
           </CurrentStatusContainer>
           <CurrentInfoContainer>
           </CurrentInfoContainer>

@@ -11,26 +11,29 @@ class WeatherPage {
 
   @computed
   get currentInfo() {
-    console.log("this.hourlyInfoList", this.hourlyInfoList);
     if(isEmpty(this.hourlyInfoList)) {
       return {};
     }
-    
-    console.log("this.hourlyInfoList[0]", this.hourlyInfoList[0]);
     
     const {
       main: {
         temp,
         humidity,
       },
+      weather,
       clouds,
       wind,
     } = this.hourlyInfoList[0];
+    const {main, description, icon} = weather[0];
+    
     return {
-      Temparature: temp,
-      Humidity: humidity,
-      Cloud: clouds.all,
-      Wind: wind
+      mainDescription: main,
+      detailDescription: description,
+      icon,
+      temp,
+      humidity,
+      cloud: clouds.all,
+      wind: wind
     };
   }
 

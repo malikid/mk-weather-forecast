@@ -7,7 +7,7 @@ import {Container, WeatherIcon, WeatherDescription} from './styles';
 @observer
 class CurrentStatus extends Component {
   render() {
-    const {mainDescription, description, icon} = this.props;
+    const {mainDescription, detailDescription, icon} = this.props;
     
     if(!mainDescription) {
       return null;
@@ -17,7 +17,7 @@ class CurrentStatus extends Component {
       <Container>
         <WeatherIcon src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
         <WeatherDescription>{mainDescription}</WeatherDescription>
-        {description && <WeatherDescription>{description}</WeatherDescription>}
+        {detailDescription && <WeatherDescription>{detailDescription}</WeatherDescription>}
       </Container>
     );
   }

@@ -1,4 +1,5 @@
 dependencies:
+  '@ant-design/charts': 0.9.4
   antd: 4.3.0
   axios: 0.19.2
   customize-cra: 1.0.0
@@ -11,6 +12,15 @@ dependencies:
   react-scripts: 3.0.1
   styled-components: 4.3.2
 packages:
+  /@ant-design/charts/0.9.4:
+    dependencies:
+      '@antv/g2plot': 1.1.5
+    dev: false
+    peerDependencies:
+      react: ^16.8.4
+      react-dom: ^16.8.4
+    resolution:
+      integrity: sha512-HNCjoG2ddI7kLon4uNpMjy9pAmO8N5mKy3PWPPpLJY2KUHSJFh/8gHwSeJh2poqg+Vq+jutA5WFYm3z9LaPvLA==
   /@ant-design/colors/3.2.2:
     dependencies:
       tinycolor2: 1.4.1
@@ -52,6 +62,179 @@ packages:
       react-dom: ^0.14.0 || ^15.0.1 || ^16.0.0
     resolution:
       integrity: sha512-1CR3vNFxAMmMb9btF6w9yT1xlrhZr6f/K+OkqoCLfWxN7h7jC16UCr1RsGBoFUdSq8bYfTr3pe6AiiCEDsALvA==
+  /@antv/adjust/0.2.2:
+    dependencies:
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-b5cABT0WWgKU8pfhW2ssID4FBXDBnHPuxU/HAV3nOMq1lso2BI2/r1hHnrVMZId5Dntb7YrVTOsokiD9DFZ2+w==
+  /@antv/attr/0.3.2:
+    dependencies:
+      '@antv/color-util': 2.0.5
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-31PfcVKeQdPBmr/QD+IC0NB/FbdtVKOXBCNMepFc5/dEs7jphmgG1V4tfAJmcXIHubCTHOjpscTrDIvoKSGvMQ==
+  /@antv/color-util/2.0.5:
+    dependencies:
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-eQktA9YDnWCj03rfjpg0ajvCfRkHXzBzsZa9z94pY6Jb7e3XtPUp7vDpB8KhaKm9GjPtGzQDneh+gnqkEK8mtQ==
+  /@antv/component/0.6.1:
+    dependencies:
+      '@antv/dom-util': 2.0.2
+      '@antv/g-base': 0.4.7
+      '@antv/matrix-util': 3.1.0-beta.2
+      '@antv/path-util': 2.0.8
+      '@antv/scale': 0.3.1
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-VZ8qWJHwc3zpabRVAIRaT35apUTtOU8dNbj0XO9dZ9nePFLBjTduLP0iOxoaerkd1fEasanBmgwxnS4pT4fXaA==
+  /@antv/coord/0.3.0:
+    dependencies:
+      '@antv/matrix-util': 3.1.0-beta.2
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-lm5Ct+r62mFVqhziKoDFN3PQjnkNBMOoOG+kBsPq3M3GqlQt5Jc7euOHMFcYSZM9HJmsKkGcih6EWDVVliMEZg==
+  /@antv/dom-util/2.0.2:
+    dependencies:
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-i/rh385casRd6OA4rbpbA2jyiwY/w7PtkA+74mH43PiBzOcLpDg1jEWR9dMO0tIqUzHQWWqKNNjmXVubl4GS6g==
+  /@antv/event-emitter/0.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-6C6NJOdoNVptCr5y9BVOhKkCgW7LFs/SpcRyAExUeSjAm0zJqcqNkSIRGsXYhj4PJI+CZICHzGwwiSnIsE68Ug==
+  /@antv/g-base/0.4.7:
+    dependencies:
+      '@antv/event-emitter': 0.1.2
+      '@antv/g-math': 0.1.3
+      '@antv/matrix-util': 3.1.0-beta.2
+      '@antv/path-util': 2.0.8
+      '@antv/util': 2.0.9
+      '@types/d3-timer': 1.0.9
+      d3-ease: 1.0.6
+      d3-interpolate: 1.4.0
+      d3-timer: 1.0.10
+      detect-browser: 5.1.0
+    dev: false
+    resolution:
+      integrity: sha512-wKSpS3/M1slU92iOgi2QV4MCd82J1d2PyPcQArqSFRUZU0KnVMIl95v79dG0Be4YvFaZ3bVrT6Ns1Czr8oplhA==
+  /@antv/g-canvas/0.4.12:
+    dependencies:
+      '@antv/g-base': 0.4.7
+      '@antv/g-math': 0.1.3
+      '@antv/path-util': 2.0.8
+      '@antv/util': 2.0.9
+      gl-matrix: 3.3.0
+    dev: false
+    resolution:
+      integrity: sha512-A6mpt+jhN4pEOidLuPmksmEI8Y3NMz4WcNnPKVfLflfTULcI1kjE/ItlFFEx+uqbTX4Osz9vXOajOEw4W5fhUw==
+  /@antv/g-gesture/1.0.0/@antv!g-base@0.4.7:
+    dependencies:
+      '@antv/event-emitter': 0.1.2
+      '@antv/g-base': 0.4.7
+      d3-ease: 1.0.6
+    dev: false
+    id: registry.npmjs.org/@antv/g-gesture/1.0.0
+    peerDependencies:
+      '@antv/g-base': ~0.4.4
+    resolution:
+      integrity: sha512-RljojCkmkTyxBOd6qLCOtF3Yk8JAYpa8J+CuHkjH4/SFFeJhakAkQnYAkLccaGrjYWAwC9IOPzEgK1cTd7v/gw==
+  /@antv/g-math/0.1.3:
+    dependencies:
+      '@antv/util': 2.0.9
+      gl-matrix: 3.3.0
+    dev: false
+    resolution:
+      integrity: sha512-m4jF1Xm9bSTDLU35u3bSW9UcqJJVxU+E+bKtJgNfXUiDwHILYJey825+ApsZ8yjU7SD1kDP6GH6NTGzmChszEQ==
+  /@antv/g-svg/0.4.7:
+    dependencies:
+      '@antv/g-base': 0.4.7
+      '@antv/g-math': 0.1.3
+      '@antv/util': 2.0.9
+      detect-browser: 4.8.0
+    dev: false
+    resolution:
+      integrity: sha512-+lqlBK+qylP4t/vyUgEaPthp1XmTiImfkPl/ZmRp3L1knH64OI9XTfOGGuBUFAt3JBt7VHKf6t0L/MCf0BR88Q==
+  /@antv/g2/4.0.9:
+    dependencies:
+      '@antv/adjust': 0.2.2
+      '@antv/attr': 0.3.2
+      '@antv/color-util': 2.0.5
+      '@antv/component': 0.6.1
+      '@antv/coord': 0.3.0
+      '@antv/event-emitter': 0.1.2
+      '@antv/g-base': 0.4.7
+      '@antv/g-canvas': 0.4.12
+      '@antv/g-svg': 0.4.7
+      '@antv/matrix-util': 3.1.0-beta.2
+      '@antv/path-util': 2.0.8
+      '@antv/scale': 0.3.1
+      '@antv/util': 2.0.9
+      tslib: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-X+4ohfGVn/akK7yumBXiAbVDb/6nCR5Xlzl8ctuFNwFi6k2SPe1XkyiaWuZHO4XRSqBawb1KnSDhJsE5sKAvZw==
+  /@antv/g2plot/1.1.5:
+    dependencies:
+      '@antv/component': 0.6.1
+      '@antv/coord': 0.3.0
+      '@antv/dom-util': 2.0.2
+      '@antv/event-emitter': 0.1.2
+      '@antv/g-base': 0.4.7
+      '@antv/g-canvas': 0.4.12
+      '@antv/g-gesture': /@antv/g-gesture/1.0.0/@antv!g-base@0.4.7
+      '@antv/g-svg': 0.4.7
+      '@antv/g2': 4.0.9
+      '@antv/matrix-util': 3.1.0-beta.2
+      '@antv/scale': 0.3.1
+      '@antv/util': 2.0.9
+      d3-regression: 1.3.4
+      resize-observer-polyfill: 1.5.1
+      tslib: 1.13.0
+      warning: 4.0.3
+    dev: false
+    resolution:
+      integrity: sha512-XFCsGl9elkYVTEIEVXwOFeMV7s6Aqs9wwzvLYQsBQ4cBiWpKBGp7cLZSSP8pumpIiR/5Vcy8USZ6V87RtPmvBg==
+  /@antv/matrix-util/3.1.0-beta.2:
+    dependencies:
+      '@antv/util': 2.0.9
+      gl-matrix: 3.3.0
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-Efwp0ZHxVDK/8RUa/RRWN7HKFHJmjn7Oq5HaNBbCmsxd7JTla3Zsoq1AZrjWMDlq0lplo77urclwI+XIW8NEHw==
+  /@antv/path-util/2.0.8:
+    dependencies:
+      '@antv/util': 2.0.9
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-g5gt12MY1oEzh/j5XfLNRCfJU7E+Us+2yM5Hqc0y8xeWhb5l013XG5BPV37KmOf6WAys9KNxklNniHCZ6SqCKw==
+  /@antv/scale/0.3.1:
+    dependencies:
+      '@antv/util': 2.0.9
+      fecha: 3.0.3
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-bl1IAuiwVasrCpgeeT/aXYpiCiL5T3vJSWgFiRLPJeWhMGCTfsMYP/XKp6gqpD0nVj/WsF2VsoUhJG4VlyY3Pw==
+  /@antv/util/2.0.9:
+    dependencies:
+      tslib: 1.13.0
+    dev: false
+    resolution:
+      integrity: sha512-JblWzne7msAPDdxkUhEk8zAz0Wd6igKwqymGbvIeyOydGrhBhGjA3nEayFj4IlG+XixCvGFKsCB4yuFS4glRIA==
   /@babel/code-frame/7.0.0:
     dependencies:
       '@babel/highlight': 7.5.0
@@ -2050,6 +2233,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-CeBpmX1J8kWLcDEnI3Cl2Eo6RfbGvzUctA+CjZUhOKDFbLfcr7fc4usEqLNWetrlJd7RhAkyYe2czXop4fICpw==
+  /@types/d3-timer/1.0.9:
+    dev: false
+    resolution:
+      integrity: sha512-WvfJ3LFxBbWjqRGz9n7GJt08RrTHPJDVsIwwoCMROlqF+iDacYiAFjf9oqnq0mXpb2juA2N/qjKP+MKdal3YNQ==
   /@types/istanbul-lib-coverage/2.0.1:
     dev: false
     resolution:
@@ -3957,6 +4144,28 @@ packages:
     dev: false
     resolution:
       integrity: sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
+  /d3-color/1.4.1:
+    dev: false
+    resolution:
+      integrity: sha512-p2sTHSLCJI2QKunbGb7ocOh7DgTAn8IrLx21QRc/BSnodXM4sv6aLQlnfpvehFMLZEfBc6g9pH9SWQccFYfJ9Q==
+  /d3-ease/1.0.6:
+    dev: false
+    resolution:
+      integrity: sha512-SZ/lVU7LRXafqp7XtIcBdxnWl8yyLpgOmzAk0mWBI9gXNzLDx5ybZgnRbH9dN/yY5tzVBqCQ9avltSnqVwessQ==
+  /d3-interpolate/1.4.0:
+    dependencies:
+      d3-color: 1.4.1
+    dev: false
+    resolution:
+      integrity: sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA==
+  /d3-regression/1.3.4:
+    dev: false
+    resolution:
+      integrity: sha512-o5nwONeooEfy+L98Ej+WPccb6LgLKtsnXLuWzXb8Ta1mN95Jy0Aw9X2TxV+S+OW+NcrBfEjxSURoSlQfVAEkrg==
+  /d3-timer/1.0.10:
+    dev: false
+    resolution:
+      integrity: sha512-B1JDm0XDaQC+uvo4DT79H0XmBskgS3l6Ve+1SBCfxgmtIb1AVrPIoqd+nPSv+loMX8szQ0sVUhGngL7D5QPiXw==
   /damerau-levenshtein/1.0.5:
     dev: false
     resolution:
@@ -4111,6 +4320,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+  /detect-browser/4.8.0:
+    dev: false
+    resolution:
+      integrity: sha512-f4h2dFgzHUIpjpBLjhnDIteXv8VQiUm8XzAuzQtYUqECX/eKh67ykuiVoyb7Db7a0PUSmJa3OGXStG0CbQFUVw==
+  /detect-browser/5.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-WKa9p+/MNwmTiS+V2AS6eGxic+807qvnV3hC+4z2GTY+F42h1n8AynVTMMc4EJBC32qMs6yjOTpeDEQQt/AVqQ==
   /detect-newline/2.1.0:
     dev: false
     engines:
@@ -4903,6 +5120,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-VOmr99+i8mzZsWNsWIwa/AXeXVg=
+  /fecha/3.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-6LQK/1jud/FZnfEEZJ7y81vw7ge81DNd/XEsX0hgMUjhS+QMljkb1C0czBaP7dMNRVrd5mw/J2J7qI2Nw+TWZw==
   /figgy-pudding/3.5.1:
     dev: false
     resolution:
@@ -5225,6 +5446,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
+  /gl-matrix/3.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-COb7LDz+SXaHtl/h4LeaFcNdJdAQSDeVqjiIihSXNrkWObZLhDI4hIkZC11Aeqp7bcE72clzB0BnDXr2SmslRA==
   /glob-parent/3.1.0:
     dependencies:
       is-glob: 3.1.0
@@ -10849,6 +11074,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+  /tslib/1.13.0:
+    dev: false
+    resolution:
+      integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+  /tslib/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
   /tsutils/3.17.0:
     dependencies:
       tslib: 1.10.0
@@ -11609,6 +11842,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  '@ant-design/charts': ^0.9.4
   antd: ^4.2.5
   axios: ^0.19.2
   customize-cra: ^1.0.0
