@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import CurrentStatus from 'Components/CurrentStatus';
 import Metric from 'Components/Metric';
+import LineChart from 'Components/LineChart';
 
 import {
   PageContainer,
@@ -23,7 +24,7 @@ class App extends Component {
   }
 
   render() {
-    const {loading, currentInfo} = this.props.store.weatherPage;
+    const {loading, currentInfo, todayInfo, nextInfo} = this.props.store.weatherPage;
     
     if(loading || isEmpty(currentInfo)) {
       return <Spin />;
@@ -35,7 +36,7 @@ class App extends Component {
       icon,
       temp,
       humidity,
-      cloud,
+      clouds,
       wind
     } = currentInfo;
     
@@ -48,13 +49,15 @@ class App extends Component {
           <CurrentInfoContainer>
             <Metric title={'Temperature'} description={temp} />
             <Metric title={'Humidity'} description={humidity} />
-            <Metric title={'Cloud'} description={cloud} />
+            <Metric title={'Cloud'} description={clouds} />
             <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
           </CurrentInfoContainer>
         </CurrentContainer>
         <TodayContainer>
+          <LineChart config={todayInfo} />
         </TodayContainer>
         <NextContainer>
+          <LineChart config={nextInfo} />
         </NextContainer>
       </PageContainer>
     );

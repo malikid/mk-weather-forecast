@@ -2,13 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const PageContainer = styled.div`
-  diaplay: flex;
+  height: 100%;
+  padding: 50px;
+  display: flex;
   flex-direction: column;
   flexWrap: wrap;
 `;
 
 export const CurrentContainer = styled.div`
-  diaplay: flex;
+  display: flex;
   flex-direction: row;
 `;
 

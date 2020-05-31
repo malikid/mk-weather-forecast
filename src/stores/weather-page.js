@@ -33,13 +33,17 @@ class WeatherPage {
       icon,
       temp,
       humidity,
-      cloud: clouds.all,
+      clouds: clouds.all,
       wind: wind
     };
   }
 
   @computed
   get todayInfo() {
+    if(isEmpty(this.hourlyInfoList)) {
+      return {};
+    }
+
     const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
     const data = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
       // {
@@ -61,7 +65,7 @@ class WeatherPage {
       result.push({
         type: 'cloud',
         datetime,
-        value: hourlyInfo.cloud.all
+        value: hourlyInfo.clouds.all
       });
       result.push({
         type: 'wind',
@@ -95,6 +99,10 @@ class WeatherPage {
 
   @computed
   get nextInfo() {
+    if(isEmpty(this.hourlyInfoList)) {
+      return {};
+    }
+
     const nextHourlyInfoList = slice(this.hourlyInfoList, 12, 96);
     const data = reduce(nextHourlyInfoList, (result, hourlyInfo) => {
       // {
@@ -116,7 +124,7 @@ class WeatherPage {
       result.push({
         type: 'cloud',
         datetime,
-        value: hourlyInfo.cloud.all
+        value: hourlyInfo.clouds.all
       });
       result.push({
         type: 'wind',
@@ -3277,7 +3285,6 @@ class WeatherPage {
 "population": 1260391
 }
 };
-      console.log("response list", response.list);
       this.setCurrentCity(response.city.name);
       this.setHourlyInfoList(response.list);
     } catch(e) {
