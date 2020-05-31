@@ -1,17 +1,30 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import CurrentStatus from 'Components/currentStatus';
+import Metric from 'Components/metric';
 
 import {
   CurrentContainer,
+  CurrentStatusContainer,
+  CurrentInfoContainer,
   TodayContainer,
-  Next
-}
+  NextContainer
+} from './styles';
 
-function App() {
+class App extends Component {
   return (
     <div className="App">
-      <CurrentStatus />
+      <CurrentContainer>
+        <CurrentStatusContainer>
+          <CurrentStatus />
+        </CurrentStatusContainer>
+        <CurrentInfoContainer>
+        </CurrentInfoContainer>
+      </CurrentContainer>
+      <TodayContainer>
+      </TodayContainer>
+      <NextContainer>
+      </NextContainer>
     </div>
   );
 }
