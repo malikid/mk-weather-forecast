@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export const PageContainer = styled.div`
+  diaplay: flex;
+  flex-direction: column;
+  flexWrap: wrap;
+`;
+
 export const CurrentContainer = styled.div`
   diaplay: flex;
   flex-direction: row;

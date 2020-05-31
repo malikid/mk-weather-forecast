@@ -4,6 +4,7 @@ import axios from 'axios';
 import {API_KEY} from 'Config';
 
 class WeatherPage {
+  @observable loading = false;
   @observable currentCity;
   @observable currentInfo = {};
   @observable todayHourlyInfo = [];
@@ -12,6 +13,9 @@ class WeatherPage {
   // @computed
   // get todayInfo() {
   // }
+
+  @action
+  setLoading = (value) => (this.loading = value);
 
   @action
   setCurrentCity = (value) => (this.currentCity = value);
