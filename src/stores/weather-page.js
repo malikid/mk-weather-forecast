@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
-import reduce from 'lodash';
+import {reduce, isEmpty} from 'lodash';
 
 import {API_KEY} from 'Config';
 
@@ -11,6 +11,13 @@ class WeatherPage {
 
   @computed
   get currentInfo() {
+    console.log("this.hourlyInfoList", this.hourlyInfoList);
+    if(isEmpty(this.hourlyInfoList)) {
+      return {};
+    }
+    
+    console.log("this.hourlyInfoList[0]", this.hourlyInfoList[0]);
+    
     const {
       main: {
         temp,
@@ -44,6 +51,7 @@ class WeatherPage {
   setHourlyInfoList = (value) => (this.hourlyInfoList = value);
 
   fetchWeatherData = async () => {
+    this.setLoading(true);
     // TODO get the location from browser
     const cityState = 'Berlin,us';
     try {
@@ -3159,10 +3167,13 @@ class WeatherPage {
 "population": 1260391
 }
 };
+      console.log("response list", response.list);
       this.setCurrentCity(response.city.name);
       this.setHourlyInfoList(response.list);
     } catch(e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 };

@@ -7,18 +7,17 @@ import {Container, WeatherIcon, WeatherDescription} from './styles';
 @observer
 class CurrentStatus extends Component {
   render() {
-    const {currentInfo} = this.props.store.weatherPage;
+    const {mainDescription, description, icon} = this.props;
     
-    if(!currentInfo) {
-      return <Spin />;
+    if(!mainDescription) {
+      return null;
     }
-    
-    const {main, description, icon} = currentInfo.weather[0];
     
     return (
       <Container>
         <WeatherIcon src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
-        <WeatherDescription>{main}</WeatherDescription>
+        <WeatherDescription>{mainDescription}</WeatherDescription>
+        {description && <WeatherDescription>{description}</WeatherDescription>}
       </Container>
     );
   }

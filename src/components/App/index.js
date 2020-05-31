@@ -18,7 +18,7 @@ import {
 @observer
 class App extends Component {
   componentDidMount(prevProps) {
-    this.props.store.weather.page.fetchWeatherData();
+    this.props.store.weatherPage.fetchWeatherData();
   }
 
   render() {
