@@ -12,6 +12,7 @@ import {
   CurrentContainer,
   CurrentStatusContainer,
   CurrentInfoContainer,
+  Column,
   TodayContainer,
   NextContainer
 } from './styles';
@@ -47,10 +48,14 @@ class App extends Component {
             <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon}/>
           </CurrentStatusContainer>
           <CurrentInfoContainer>
-            <Metric title={'Temperature'} description={temp} />
-            <Metric title={'Humidity'} description={humidity} />
-            <Metric title={'Clouds'} description={clouds} />
-            <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
+            <Column>
+              <Metric title={'Temperature'} description={temp} />
+              <Metric title={'Humidity'} description={humidity} />
+            </Column>
+            <Column>
+              <Metric title={'Clouds'} description={clouds} />
+              <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
+            </Column>
           </CurrentInfoContainer>
         </CurrentContainer>
         <TodayContainer>
