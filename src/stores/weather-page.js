@@ -1,11 +1,28 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
-import {reduce, isEmpty, slice} from 'lodash';
+import {reduce, isEmpty, slice, cloneDeep} from 'lodash';
 import moment from 'moment';
 
 import {API_KEY} from 'Config';
 
 class WeatherPage {
+  defaultLineChartConfig = {
+    title: {
+      visible: false,
+      text: 'Line Chart',
+    },
+    description: {
+      visible: false,
+      text: '',
+    },
+    padding: 'auto',
+    forceFit: true,
+    data: [],
+    xField: 'datetime',
+    yField: 'value',
+    responsive: true,
+  };
+
   @observable loading = false;
   @observable currentCity;
   @observable hourlyInfoList = [];
@@ -41,6 +58,12 @@ class WeatherPage {
     };
   }
 
+  generateBaseConfig = (type) => {
+    let config = cloneDeep(this.defaultLineChartConfig);
+    config.yField = type;
+    return config;
+  };
+
   @computed
   get todayInfo() {
     if(isEmpty(this.hourlyInfoList)) {
@@ -48,14 +71,11 @@ class WeatherPage {
     }
 
     const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
-    const data = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
-      // {
-      //   type: '', // wind / cloud / temp / humid
-      //   datetime: '', // timestemp to date + time
-      //   value: ''  // value
-      // }
+
+    const configs = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
-      result.push({
+      
+      result.temp.data.push({
         type: 'temp',
         datetime,
         value: hourlyInfo.main.temp
@@ -76,28 +96,14 @@ class WeatherPage {
         value: hourlyInfo.wind.speed
       });
       return result;
-    }, []);
+    }, {
+      temp: this.generateBaseConfig(temp),
+      humidity: this.generateBaseConfig(humidity),
+      cloud: this.generateBaseConfig(cloud),
+      wind: this.generateBaseConfig(wind)
+    });
 
-    return {
-      title: {
-        visible: false,
-        text: 'Line Chart',
-      },
-      description: {
-        visible: false,
-        text: '',
-      },
-      padding: 'auto',
-      forceFit: true,
-      data,
-      xField: 'datetime',
-      yField: 'value',
-      yAxis: { label: { formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) } },
-      legend: { position: 'right-top' },
-      seriesField: 'type',
-      color: ['#1979C9', '#D62A0D', '#FAA219', '#FAA219'],
-      responsive: true,
-    };
+    return configs;
   }
 
   @computed

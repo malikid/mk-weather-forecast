@@ -8,9 +8,10 @@ class LineChart extends Component {
   render() {
     const menu = (
       <Menu onClick={() => {}}>
-        <Menu.Item key="1">1st menu item</Menu.Item>
-        <Menu.Item key="2">2nd memu item</Menu.Item>
-        <Menu.Item key="3">3rd menu item</Menu.Item>
+        <Menu.Item key="1">Temperature</Menu.Item>
+        <Menu.Item key="2">Humidity</Menu.Item>
+        <Menu.Item key="3">Clouds</Menu.Item>
+        <Menu.Item key="4">Wind</Menu.Item>
       </Menu>
     );
     
@@ -18,7 +19,7 @@ class LineChart extends Component {
       <Card>
         <Dropdown overlay={menu}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            Hover me, Click menu item <DownOutlined />
+            Choose a type <DownOutlined />
           </a>
         </Dropdown>
         <Line {...this.props.config} />
