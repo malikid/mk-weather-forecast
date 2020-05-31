@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import {Spin} from 'antd';
+import isEmpty from 'lodash/isEmpty';
 
-import CurrentStatus from 'Components/currentStatus';
-import Metric from 'Components/metric';
+import CurrentStatus from 'Components/CurrentStatus';
+import Metric from 'Components/Metric';
 
 import {
   PageContainer,
@@ -24,19 +25,31 @@ class App extends Component {
   render() {
     const {loading, currentInfo} = this.props.store.weatherPage;
     
-    if(loading) {
+    if(loading || isEmpty(currentInfo)) {
       return <Spin />;
     }
     
-    const {} = currentInfo;
+    const {
+      mainDescription,
+      detailDescription,
+      icon,
+      temp,
+      humidity,
+      cloud,
+      wind
+    } = currentInfo;
     
     return (
       <PageContainer>
         <CurrentContainer>
           <CurrentStatusContainer>
-            <CurrentStatus mainDescription={mainDescription} detailDescription, icon/>
+            <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon}/>
           </CurrentStatusContainer>
           <CurrentInfoContainer>
+            <Metric title={'Temperature'} description={temp} />
+            <Metric title={'Humidity'} description={humidity} />
+            <Metric title={'Cloud'} description={cloud} />
+            <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
           </CurrentInfoContainer>
         </CurrentContainer>
         <TodayContainer>

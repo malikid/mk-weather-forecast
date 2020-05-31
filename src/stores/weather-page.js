@@ -37,9 +37,20 @@ class WeatherPage {
     };
   }
 
-  // @computed
-  // get todayInfo() {
-  // }
+  @computed
+  get todayInfo() {
+    // const config = {
+    //   data,
+    //   title: {
+    //     visible: true,
+    //     text: 'LineChart',
+    //   },
+    //   xField: 'year',
+    //   yField: 'value',
+    // };
+    const todayHourlyInfoList = this.hourlyInfoList.
+    return {};
+  }
 
   @action
   setLoading = (value) => (this.loading = value);
