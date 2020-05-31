@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {
-  Container,
-  Title,
-  Description
-} from './styles';
+import {Title, Description} from './styles';
+import {Container} from 'Styles/general';
 
 class Metric extends Component {
   render() {

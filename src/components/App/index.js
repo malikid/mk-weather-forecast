@@ -49,7 +49,7 @@ class App extends Component {
           <CurrentInfoContainer>
             <Metric title={'Temperature'} description={temp} />
             <Metric title={'Humidity'} description={humidity} />
-            <Metric title={'Cloud'} description={clouds} />
+            <Metric title={'Clouds'} description={clouds} />
             <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
           </CurrentInfoContainer>
         </CurrentContainer>

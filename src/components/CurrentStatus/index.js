@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import {Spin} from 'antd';
-import {Container, WeatherIcon, WeatherDescription} from './styles';
+import {WeatherIcon, WeatherDescription} from './styles';
+import {Container} from 'Styles/general';
 
 @inject('store')
 @observer
