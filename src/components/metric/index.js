@@ -7,11 +7,12 @@ import {
 
 class Metric extends Component {
   render() {
-    const {title, description} = this.props;
+    const {title, description, subDescription} = this.props;
     return (
       <Container>
         <Title>{title}</Title>
-        {description && <Description>{description}</Description>}
+        <Description>{description}</Description>
+        {subDescription && <Description>{subDescription}</Description>}
       </Container>
     );
   }

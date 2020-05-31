@@ -12,7 +12,8 @@
     "mobx-react": "^6.2.2",
     "axios": "^0.19.2",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.6"
+    "react-app-rewired": "^2.1.6",
+    "lodash": "^4.17.15"
   },
   "scripts": {
     "start": "react-app-rewired start",

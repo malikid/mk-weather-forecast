@@ -17,21 +17,16 @@ import {
 @inject('store')
 @observer
 class App extends Component {
+  componentDidMount(prevProps) {
+    this.props.store.weather.page.fetchWeatherData();
+  }
+
   render() {
     const {loading, currentInfo} = this.props.store.weatherPage;
     
     if(loading) {
       return <Spin />;
     }
-    
-    const {
-      main: {
-        temp,
-        humidity,
-      },
-      clouds,
-      wind,
-    } = currentInfo;
     
     return (
       <PageContainer>
@@ -40,10 +35,6 @@ class App extends Component {
             <CurrentStatus />
           </CurrentStatusContainer>
           <CurrentInfoContainer>
-            <Metric title={temp} />
-            <Metric title={temp} />
-            <Metric title={temp} />
-            <Metric title={temp} />
           </CurrentInfoContainer>
         </CurrentContainer>
         <TodayContainer>

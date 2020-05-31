@@ -1,14 +1,31 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
+import reduce from 'lodash';
 
 import {API_KEY} from 'Config';
 
 class WeatherPage {
   @observable loading = false;
   @observable currentCity;
-  @observable currentInfo = {};
-  @observable todayHourlyInfo = [];
-  @observable followingThreeDaysHourlyInfo = [];
+  @observable hourlyInfoList = [];
+
+  @computed
+  get currentInfo() {
+    const {
+      main: {
+        temp,
+        humidity,
+      },
+      clouds,
+      wind,
+    } = this.hourlyInfoList[0];
+    return {
+      Temparature: temp,
+      Humidity: humidity,
+      Cloud: clouds.all,
+      Wind: wind
+    };
+  }
 
   // @computed
   // get todayInfo() {
@@ -24,10 +41,7 @@ class WeatherPage {
   setCurrentInfo = (value) => (this.currentInfo = value);
 
   @action
-  setTodayHourlyInfo = (value) => (this.todayHourlyInfo = value);
-
-  @action
-  setFollowingThreeDaysHourlyInfo = (value) => (this.followingThreeDaysHourlyInfo = value);
+  setHourlyInfoList = (value) => (this.hourlyInfoList = value);
 
   fetchWeatherData = async () => {
     // TODO get the location from browser
@@ -3146,10 +3160,7 @@ class WeatherPage {
 }
 };
       this.setCurrentCity(response.city.name);
-      let hourlyInfoList = response.list;
-      this.setCurrentInfo(hourlyInfoList[0]);
-      this.setTodayHourlyInfo(hourlyInfoList.splice(0, 24));
-      this.setFollowingThreeDaysHourlyInfo(hourlyInfoList);
+      this.setHourlyInfoList(response.list);
     } catch(e) {
       console.error(e);
     }
