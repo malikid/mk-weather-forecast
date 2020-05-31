@@ -31,10 +31,13 @@ class WeatherPage {
       mainDescription: main,
       detailDescription: description,
       icon,
-      temp,
-      humidity,
-      clouds: clouds.all,
-      wind: wind
+      temp: `${Math.trunc(parseInt(temp) - 273.15)}°C`,
+      humidity: `${humidity}%`,
+      clouds: clouds && `${clouds.all}%`,
+      wind: wind && {
+        speed: `${wind.speed} meter/sec`,
+        degree: `${wind.degree} degrees`
+      }
     };
   }
 

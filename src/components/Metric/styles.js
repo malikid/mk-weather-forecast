@@ -15,5 +15,5 @@ export const Title = styled.div`
 `;
 
 export const Description = styled.div`
-  font-size: large;
+  font-size: xx-large;
 `;
