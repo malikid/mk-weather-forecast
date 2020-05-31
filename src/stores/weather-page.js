@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
-import {reduce, isEmpty} from 'lodash';
+import {reduce, isEmpty, slice} from 'lodash';
 
 import {API_KEY} from 'Config';
 
@@ -39,17 +39,71 @@ class WeatherPage {
 
   @computed
   get todayInfo() {
-    // const config = {
-    //   data,
-    //   title: {
-    //     visible: true,
-    //     text: 'LineChart',
+    const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
+    // {
+    //   "dt": 1553709600,
+    //   "main": {
+    //     "temp": 278.76,
+    //     "temp_min": 278.76,
+    //     "temp_max": 279.558,
+    //     "pressure": 1031.934,
+    //     "sea_level": 1031.934,
+    //     "grnd_level": 971.745,
+    //     "humidity": 100,
+    //     "temp_kf": -0.8
     //   },
-    //   xField: 'year',
-    //   yField: 'value',
-    // };
-    const todayHourlyInfoList = this.hourlyInfoList.
-    return {};
+    //   "weather": [{
+    //     "id": 803,
+    //     "main": "Clouds",
+    //     "description": "broken clouds",
+    //     "icon": "04n"
+    //   }],
+    //   "clouds": {
+    //     "all": 77
+    //   },
+    //   "wind": {
+    //     "speed": 1.6,
+    //     "deg": 40.932
+    //   },
+    //   "sys": {
+    //     "pod": "n"
+    //   },
+    //   "dt_txt": "2019-03-27 18:00:00"
+    // }
+    const data = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
+      // {
+      //   type: '', // wind / cloud / temp / humid
+      //   datetime: '', // timestemp to date + time
+      //   value: ''  // value
+      // }
+      result.push({
+        type: 'temp',
+        datetime,
+        value: hourlyInfo
+      });
+      return result;
+    }, []);
+    const result = {
+      title: {
+        visible: false,
+        text: 'Line Chart',
+      },
+      description: {
+        visible: false,
+        text: '',
+      },
+      padding: 'auto',
+      forceFit: true,
+      data,
+      xField: 'datetime',
+      yField: 'value',
+      yAxis: { label: { formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`) } },
+      legend: { position: 'right-top' },
+      seriesField: 'type',
+      color: ['#1979C9', '#D62A0D', '#FAA219'],
+      responsive: true,
+    };
+    return result;
   }
 
   @action
