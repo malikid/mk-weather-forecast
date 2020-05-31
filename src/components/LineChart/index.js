@@ -8,6 +8,8 @@ class LineChart extends Component {
   render() {
     const {type, config, onTypeChange} = this.props;
     
+    console.log({type, config});
+    
     const menu = (
       <Menu onClick={({key}) => {onTypeChange(key);}}>
         <Menu.Item key="temp">Temperature</Menu.Item>

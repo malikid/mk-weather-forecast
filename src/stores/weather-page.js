@@ -114,7 +114,7 @@ class WeatherPage {
     }
 
     const nextHourlyInfoList = slice(this.hourlyInfoList, 12, 96);
-    const configs = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
+    const configs = reduce(nextHourlyInfoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       
       result.temp.data.push({
