@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import {Card} from 'Styles/general';
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+export const Container = styled(Card)`
+  min-width: 300px;
 `;
 
 export const  WeatherIcon = styled.img`

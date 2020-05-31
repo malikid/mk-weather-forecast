@@ -6,27 +6,20 @@ export const PageContainer = styled.div`
   padding: 50px;
   display: flex;
   flex-direction: column;
-  flexWrap: wrap;
+  flex-wrap: wrap;
 `;
 
 export const CurrentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  flexWrap: wrap;
-`;
-
-export const CurrentStatusContainer = styled.div`
-  flex: 1;
-`;
-
-export const CurrentInfoContainer = styled.div`
-  flex: 2;
+  flex-wrap: wrap;
 `;
 
 export const Column = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flexWrap: wrap;
+  flex-wrap: wrap;
 `;
 
 export const TodayContainer = styled.div``;

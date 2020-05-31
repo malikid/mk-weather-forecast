@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Card} from 'Styles/general';
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+export const Container = styled(Card)`
+  min-width: 150px;
 `;
 
 export const Title = styled.div`

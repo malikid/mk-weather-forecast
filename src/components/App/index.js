@@ -44,19 +44,17 @@ class App extends Component {
     return (
       <PageContainer>
         <CurrentContainer>
-          <CurrentStatusContainer>
+          <Column>
             <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon}/>
-          </CurrentStatusContainer>
-          <CurrentInfoContainer>
-            <Column>
-              <Metric title={'Temperature'} description={temp} />
-              <Metric title={'Humidity'} description={humidity} />
-            </Column>
-            <Column>
-              <Metric title={'Clouds'} description={clouds} />
-              <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
-            </Column>
-          </CurrentInfoContainer>
+          </Column>
+          <Column>
+            <Metric title={'Temperature'} description={temp} />
+            <Metric title={'Humidity'} description={humidity} />
+          </Column>
+          <Column>
+            <Metric title={'Clouds'} description={clouds} />
+            <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
+          </Column>
         </CurrentContainer>
         <TodayContainer>
           <LineChart config={todayInfo} />

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { Line } from '@ant-design/charts';
-import {Container} from 'Styles/general';
+import {Card} from 'Styles/general';
 
 class LineChart extends Component {
   render() {
     return (
-      <Container>
+      <Card>
         <Line {...this.props.config} />
-      </Container>
+      </Card>
     );
   }
 };
