@@ -21,6 +21,11 @@ class WeatherPage {
     xField: 'datetime',
     yField: 'value',
     responsive: true,
+    point: { visible: true },
+    label: {
+      visible: true,
+      type: 'point',
+    },
   };
 
   @observable loading = false;
@@ -78,19 +83,19 @@ class WeatherPage {
       
       result.temp.data.push({
         datetime,
-        value: hourlyInfo.main.temp
+        temp: hourlyInfo.main.temp
       });
       result.humidity.data.push({
         datetime,
-        value: hourlyInfo.main.humidity
+        humidity: hourlyInfo.main.humidity
       });
       result.clouds.data.push({
         datetime,
-        value: hourlyInfo.clouds.all
+        clouds: hourlyInfo.clouds.all
       });
       result.wind.data.push({
         datetime,
-        value: hourlyInfo.wind.speed
+        wind: hourlyInfo.wind.speed
       });
       return result;
     }, {
@@ -115,19 +120,19 @@ class WeatherPage {
       
       result.temp.data.push({
         datetime,
-        value: hourlyInfo.main.temp
+        temp: hourlyInfo.main.temp
       });
       result.humidity.data.push({
         datetime,
-        value: hourlyInfo.main.humidity
+        humidity: hourlyInfo.main.humidity
       });
       result.clouds.data.push({
         datetime,
-        value: hourlyInfo.clouds.all
+        clouds: hourlyInfo.clouds.all
       });
       result.wind.data.push({
         datetime,
-        value: hourlyInfo.wind.speed
+        wind: hourlyInfo.wind.speed
       });
       return result;
     }, {
@@ -153,10 +158,16 @@ class WeatherPage {
   setHourlyInfoList = (value) => (this.hourlyInfoList = value);
 
   @action
-  setTodayLineChartType = (value) => (this.todayLineChartType = value);
+  setTodayLineChartType = (type) => {
+    console.log("setTodayLineChartType type", type);
+    this.todayLineChartType = type;
+  };
 
   @action
-  setNextLineChartType = (value) => (this.nextLineChartType = value);
+  setNextLineChartType = (type) => {
+    console.log("setNextLineChartType type", type);
+    this.nextLineChartType = type;
+  };
 
   fetchWeatherData = async () => {
     this.setLoading(true);

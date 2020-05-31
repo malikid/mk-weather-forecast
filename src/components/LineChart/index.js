@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
+import {observer} from 'mobx-react';
 import {Line} from '@ant-design/charts';
 import {Menu, Dropdown, message} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
 import {Card} from 'Styles/general';
 
+@observer
 class LineChart extends Component {
   render() {
     const {type, config, onTypeChange} = this.props;
     
-    console.log({type, config});
+    console.log('config[', type, ']', config[type]);
     
     const menu = (
       <Menu onClick={({key}) => {onTypeChange(key);}}>
