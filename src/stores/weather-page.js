@@ -51,16 +51,20 @@ class WeatherPage {
     } = this.hourlyInfoList[0];
     const {main, description, icon} = weather[0];
     
+    const hasCloudsInfo = !isEmpty(clouds);
+    const hasWindInfo = !isEmpty(wind);
+    const wordingForNoInfo = 'No Info';
+    
     return {
       mainDescription: main,
       detailDescription: description,
       icon,
-      temp: `${Math.trunc(parseInt(temp) - 273.15)}°C`,
+      temp: `${temp}°C`,
       humidity: `${humidity}%`,
-      clouds: !isEmpty(clouds) && `${clouds.all}%`,
-      wind: !isEmpty(wind) && {
-        speed: `${wind.speed} meter/sec`,
-        degree: `${wind.degree} degrees`
+      clouds: hasCloudsInfo ? `${clouds.all}%` : wordingForNoInfo,
+      wind: {
+        speed: hasWindInfo ? `${wind.speed} meter/sec` : wordingForNoInfo,
+        degree: hasWindInfo ? `${wind.degree} degrees` : wordingForNoInfo
       }
     };
   }
@@ -69,6 +73,35 @@ class WeatherPage {
     let config = cloneDeep(this.defaultLineChartConfig);
     config.yField = type;
     return config;
+  };
+
+  transformInfoListToLineChartConfig = (list) => {
+    return reduce(todayHourlyInfoList, (result, hourlyInfo) => {
+      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
+      
+      result.temp.data.push({
+        datetime,
+        temp: hourlyInfo.main.temp
+      });
+      result.humidity.data.push({
+        datetime,
+        humidity: hourlyInfo.main.humidity
+      });
+      result.clouds.data.push({
+        datetime,
+        clouds: hourlyInfo.clouds.all
+      });
+      result.wind.data.push({
+        datetime,
+        wind: hourlyInfo.wind.speed
+      });
+      return result;
+    }, {
+      temp: this.generateBaseConfig('temp'),
+      humidity: this.generateBaseConfig('humidity'),
+      clouds: this.generateBaseConfig('clouds'),
+      wind: this.generateBaseConfig('wind')
+    });
   };
 
   @computed
@@ -155,19 +188,18 @@ class WeatherPage {
   setCurrentInfo = (value) => (this.currentInfo = value);
 
   @action
-  setHourlyInfoList = (value) => (this.hourlyInfoList = value);
-
-  @action
-  setTodayLineChartType = (type) => {
-    console.log("setTodayLineChartType type", type);
-    this.todayLineChartType = type;
+  setHourlyInfoList = (list) => {
+    this.hourlyInfoList = map(list, item => {
+      item.main.temp = Math.truncate(item.main.temp - 273.15);
+      return item;
+    });
   };
 
   @action
-  setNextLineChartType = (type) => {
-    console.log("setNextLineChartType type", type);
-    this.nextLineChartType = type;
-  };
+  setTodayLineChartType = (type) => (this.todayLineChartType = type);
+
+  @action
+  setNextLineChartType = (type) => (this.nextLineChartType = type);
 
   fetchWeatherData = async () => {
     this.setLoading(true);
