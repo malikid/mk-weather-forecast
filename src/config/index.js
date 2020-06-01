@@ -1,1 +1,1 @@
-export const API_KEY = process.env.API_KEY || 'b6907d289e10d714a6e88b30761fae22';
+export const API_KEY = process.env.API_KEY || '439d4b804bc8187953eb36d2a8c26a02';

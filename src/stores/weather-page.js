@@ -135,7 +135,8 @@ class WeatherPage {
   @action
   setHourlyInfoList = (list) => {
     this.hourlyInfoList = map(list, item => {
-      item.main.temp = Math.trunc(parseInt(item.main.temp) - 273.15);
+      const temp = parseInt(item.main.temp);
+      item.main.temp = temp > 200 ? Math.trunc(parseInt(item.main.temp) - 273.15) : temp;
       return item;
     });
   };
@@ -158,7 +159,7 @@ class WeatherPage {
 
   fetchData = async (locationQueryString) => {
     try {
-      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://openweathermap.org/data/2.5/forecast/hourly?${locationQueryString}&appid=${API_KEY}`);
+      const response = await axios.get(`https://openweathermap.org/data/2.5/forecast/hourly?${locationQueryString}&appid=${API_KEY}`);
       const data = response.data;
       this.setCurrentCity(data.city.name);
       this.setHourlyInfoList(data.list);
