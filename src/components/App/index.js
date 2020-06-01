@@ -75,7 +75,6 @@ class App extends Component {
         <SectionHeader>WEATHER TODAY</SectionHeader>
         <TodayContainer>
           <LineChart
-            title={'Today\'s Weather'}
             type={todayLineChartType}
             config={todayInfo}
             onTypeChange={setTodayLineChartType}
@@ -84,7 +83,6 @@ class App extends Component {
         <SectionHeader>WEATHER IN 3 DAYS</SectionHeader>
         <NextContainer>
           <LineChart
-            title={'Next Three Days\' Weather'}
             type={nextLineChartType}
             config={nextInfo}
             onTypeChange={setNextLineChartType}

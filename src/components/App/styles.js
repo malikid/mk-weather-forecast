@@ -19,6 +19,7 @@ export const PageContainer = styled.div`
 `;
 
 export const SectionHeader = styled.div`
+  text-align: center;
   font-size: xxx-large;
 `;
 

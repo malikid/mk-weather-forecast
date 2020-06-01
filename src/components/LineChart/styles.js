@@ -10,5 +10,4 @@ export const Title = styled.div`
 `;
 
 export const RadioContainer = styled.div`
-  margin-top: 20px;
 `;

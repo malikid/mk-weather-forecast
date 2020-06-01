@@ -12,8 +12,12 @@ export const Card = styled.div`
 
   position: relative;
 
-  &:after{
+  &:after {
     content: '';
     display: block;
+  }
+
+  &:hover {
+    transform: translate(-10px, -10px);
   }
 `;

@@ -21,11 +21,6 @@ class WeatherPage {
     xField: 'datetime',
     yField: 'value',
     responsive: true,
-    // point: { visible: true },
-    // label: {
-    //   visible: true,
-    //   type: 'point',
-    // },
   };
 
   @observable loading = false;
@@ -152,7 +147,8 @@ class WeatherPage {
     // TODO get the location from browser
     const cityState = 'Berlin,us';
     try {
-      // const response = await axios.get(`https://samples.openweathermap.org/data/2.5/forecast/hourly?q=${cityState}&appid=${API_KEY}`);
+      const response2 = await axios.get(`https://samples.openweathermap.org/data/2.5/forecast/hourly?q=${cityState}&appid=${API_KEY}`);
+      console.log({response2});
       const response = {
 "cod": "200",
 "message": 0.0151,
