@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import {Card} from 'Styles/general';
 
 export const Container = styled(Card)`
-  min-width: 300px;
+  min-width: 200px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const  WeatherIcon = styled.img`

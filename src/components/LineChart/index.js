@@ -4,11 +4,12 @@ import {Line} from '@ant-design/charts';
 import {Menu, Dropdown, message} from 'antd';
 import {DownOutlined} from '@ant-design/icons';
 import {Card} from 'Styles/general';
+import {Title} from './styles';
 
 @observer
 class LineChart extends Component {
   render() {
-    const {type, config, onTypeChange} = this.props;
+    const {title, type, config, onTypeChange} = this.props;
     
     const menu = (
       <Menu onClick={({key}) => {onTypeChange(key);}}>
@@ -21,11 +22,18 @@ class LineChart extends Component {
     
     return (
       <Card>
-        <Dropdown overlay={menu}>
+        <Title>{title}</Title>
+        {false && <Dropdown overlay={menu}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
             Temperature <DownOutlined />
           </a>
-        </Dropdown>
+        </Dropdown>}
+        <Radio.Group onChange={onTypeChange} defaultValue="temp">
+          <Radio.Button value="temp">Temperature</Radio.Button>
+          <Radio.Button value="humidity">Humidity</Radio.Button>
+          <Radio.Button value="clouds">Clouds</Radio.Button>
+          <Radio.Button value="d">Chengdu</Radio.Button>
+        </Radio.Group>
         <Line {...config[type]} />
       </Card>
     );

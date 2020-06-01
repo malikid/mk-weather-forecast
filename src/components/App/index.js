@@ -71,10 +71,20 @@ class App extends Component {
           </Column>
         </CurrentContainer>
         <TodayContainer>
-          <LineChart type={todayLineChartType} config={todayInfo} onTypeChange={setTodayLineChartType} />
+          <LineChart
+            title={'Today\'s Weather'}
+            type={todayLineChartType}
+            config={todayInfo}
+            onTypeChange={setTodayLineChartType}
+          />
         </TodayContainer>
         <NextContainer>
-          <LineChart type={nextLineChartType} config={nextInfo} onTypeChange={setNextLineChartType} />
+          <LineChart
+            title={'Next Three Days\' Weather'}
+            type={nextLineChartType}
+            config={nextInfo}
+            onTypeChange={setNextLineChartType}
+          />
         </NextContainer>
       </PageContainer>
     );

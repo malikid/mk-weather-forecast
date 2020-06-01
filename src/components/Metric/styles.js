@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import {Card} from 'Styles/general';
 
 export const Container = styled(Card)`
-  min-width: 150px;
+  min-width: 100px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Title = styled.div`
