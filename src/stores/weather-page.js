@@ -146,12 +146,25 @@ class WeatherPage {
   @action
   setNextLineChartType = (type) => (this.nextLineChartType = type);
 
+  getCurrentLocation = (options = []) => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    });
+  };
+
   fetchWeatherData = async () => {
     this.setLoading(true);
-    // TODO get the location from browser
-    const cityState = 'Berlin,us';
     try {
-      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://samples.openweathermap.org/data/2.5/forecast/hourly?q=${cityState}&appid=${API_KEY}`);
+      let locationQueryString;
+      if('geolocation' in navigator) {
+        // geolocation is available
+        const {coords: {latitude, longitude}} = await this.getCurrentLocation();
+        locationQueryString = `lat=${latitude}&lon=${longitude}`;
+      } else {
+        // geolocation IS NOT available
+        locationQueryString = 'q=London';
+      }
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://openweathermap.org/data/2.5/forecast/hourly?${locationQueryString}&appid=${API_KEY}`);
       const data = response.data;
       this.setCurrentCity(data.city.name);
       this.setHourlyInfoList(data.list);
