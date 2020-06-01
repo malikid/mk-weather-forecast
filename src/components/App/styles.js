@@ -18,6 +18,10 @@ export const PageContainer = styled.div`
   flex-wrap: wrap;
 `;
 
+export const SectionHeader = styled.div`
+  font-size: xxx-large;
+`;
+
 export const CurrentContainer = styled.div`
   display: flex;
   flex-direction: row;

@@ -8,3 +8,7 @@ export const Title = styled.div`
   font-size: x-small;;
   font-weight: bold;
 `;
+
+export const RadioContainer = styled.div`
+  margin-top: 20px;
+`;

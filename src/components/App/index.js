@@ -10,12 +10,13 @@ import LineChart from 'Components/LineChart';
 import {
   SpinnerContainer,
   PageContainer,
+  SectionHeader,
   CurrentContainer,
   CurrentStatusContainer,
   CurrentInfoContainer,
   Column,
   TodayContainer,
-  NextContainer
+  NextContainer,
 } from './styles';
 
 @inject('store')
@@ -57,6 +58,7 @@ class App extends Component {
     
     return (
       <PageContainer>
+        <SectionHeader>WEATHER NOW</SectionHeader>
         <CurrentContainer>
           <Column>
             <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon}/>
@@ -70,6 +72,7 @@ class App extends Component {
             <Metric title={'Wind'} description={wind.speed} subDescription={wind.deg} />
           </Column>
         </CurrentContainer>
+        <SectionHeader>WEATHER TODAY</SectionHeader>
         <TodayContainer>
           <LineChart
             title={'Today\'s Weather'}
@@ -78,6 +81,7 @@ class App extends Component {
             onTypeChange={setTodayLineChartType}
           />
         </TodayContainer>
+        <SectionHeader>WEATHER IN 3 DAYS</SectionHeader>
         <NextContainer>
           <LineChart
             title={'Next Three Days\' Weather'}

@@ -21,11 +21,11 @@ class WeatherPage {
     xField: 'datetime',
     yField: 'value',
     responsive: true,
-    point: { visible: true },
-    label: {
-      visible: true,
-      type: 'point',
-    },
+    // point: { visible: true },
+    // label: {
+    //   visible: true,
+    //   type: 'point',
+    // },
   };
 
   @observable loading = false;
