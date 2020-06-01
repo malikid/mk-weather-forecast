@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import axios from 'axios';
-import {reduce, isEmpty, slice, cloneDeep} from 'lodash';
+import {reduce, isEmpty, slice, cloneDeep, map} from 'lodash';
 import moment from 'moment';
 
 import {API_KEY} from 'Config';
@@ -75,8 +75,8 @@ class WeatherPage {
     return config;
   };
 
-  transformInfoListToLineChartConfig = (list) => {
-    return reduce(todayHourlyInfoList, (result, hourlyInfo) => {
+  transformInfoListToLineChartConfigs = (infoList) => {
+    return reduce(infoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
       
       result.temp.data.push({
@@ -111,34 +111,7 @@ class WeatherPage {
     }
 
     const todayHourlyInfoList = slice(this.hourlyInfoList, 0, 12);
-    const configs = reduce(todayHourlyInfoList, (result, hourlyInfo) => {
-      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
-      
-      result.temp.data.push({
-        datetime,
-        temp: hourlyInfo.main.temp
-      });
-      result.humidity.data.push({
-        datetime,
-        humidity: hourlyInfo.main.humidity
-      });
-      result.clouds.data.push({
-        datetime,
-        clouds: hourlyInfo.clouds.all
-      });
-      result.wind.data.push({
-        datetime,
-        wind: hourlyInfo.wind.speed
-      });
-      return result;
-    }, {
-      temp: this.generateBaseConfig('temp'),
-      humidity: this.generateBaseConfig('humidity'),
-      clouds: this.generateBaseConfig('clouds'),
-      wind: this.generateBaseConfig('wind')
-    });
-
-    return configs;
+    return this.transformInfoListToLineChartConfigs(todayHourlyInfoList);
   }
 
   @computed
@@ -148,34 +121,7 @@ class WeatherPage {
     }
 
     const nextHourlyInfoList = slice(this.hourlyInfoList, 12, 96);
-    const configs = reduce(nextHourlyInfoList, (result, hourlyInfo) => {
-      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
-      
-      result.temp.data.push({
-        datetime,
-        temp: hourlyInfo.main.temp
-      });
-      result.humidity.data.push({
-        datetime,
-        humidity: hourlyInfo.main.humidity
-      });
-      result.clouds.data.push({
-        datetime,
-        clouds: hourlyInfo.clouds.all
-      });
-      result.wind.data.push({
-        datetime,
-        wind: hourlyInfo.wind.speed
-      });
-      return result;
-    }, {
-      temp: this.generateBaseConfig('temp'),
-      humidity: this.generateBaseConfig('humidity'),
-      clouds: this.generateBaseConfig('clouds'),
-      wind: this.generateBaseConfig('wind')
-    });
-    
-    return configs;
+    return this.transformInfoListToLineChartConfigs(nextHourlyInfoList);
   }
 
   @action
@@ -190,7 +136,7 @@ class WeatherPage {
   @action
   setHourlyInfoList = (list) => {
     this.hourlyInfoList = map(list, item => {
-      item.main.temp = Math.truncate(item.main.temp - 273.15);
+      item.main.temp = Math.truncate(parseInt(item.main.temp) - 273.15);
       return item;
     });
   };
