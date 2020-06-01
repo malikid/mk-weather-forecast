@@ -136,7 +136,7 @@ class WeatherPage {
   @action
   setHourlyInfoList = (list) => {
     this.hourlyInfoList = map(list, item => {
-      item.main.temp = Math.truncate(parseInt(item.main.temp) - 273.15);
+      item.main.temp = Math.trunc(parseInt(item.main.temp) - 273.15);
       return item;
     });
   };

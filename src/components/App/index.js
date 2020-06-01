@@ -8,6 +8,7 @@ import Metric from 'Components/Metric';
 import LineChart from 'Components/LineChart';
 
 import {
+  SpinnerContainer,
   PageContainer,
   CurrentContainer,
   CurrentStatusContainer,
@@ -37,7 +38,11 @@ class App extends Component {
     } = this.props.store.weatherPage;
     
     if(loading || isEmpty(currentInfo)) {
-      return <Spin />;
+      return (
+        <SpinnerContainer>
+          <Spin />
+        </SpinnerContainer>
+      );
     }
     
     const {
