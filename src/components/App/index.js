@@ -42,7 +42,7 @@ class App extends Component {
     if(error) {
       return (
         <SpinnerErrorContainer>
-          <div>{error}</div>
+          <div>Something went wrong...</div>
         </SpinnerErrorContainer>
       );
     }
