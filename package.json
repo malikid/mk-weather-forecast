@@ -3,25 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/charts": "^0.9.4",
+    "antd": "^4.2.5",
+    "axios": "^0.19.2",
+    "lodash": "^4.17.15",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "moment": "^2.26.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "styled-components": "^4.3.2",
-    "antd": "^4.2.5",
-    "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
-    "axios": "^0.19.2",
-    "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.6",
-    "lodash": "^4.17.15",
-    "@ant-design/charts": "^0.9.4",
-    "moment": "^2.26.0"
+    "serve": "^11.3.1",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "serve -s build",
+    "start-dev": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install",
+    "heroku-postbuild": "react-app-rewired build && export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.1.6"
   }
 }
