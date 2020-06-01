@@ -147,23 +147,17 @@ class WeatherPage {
   setNextLineChartType = (type) => (this.nextLineChartType = type);
 
   getCurrentLocation = (options = []) => {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    });
+    navigator.geolocation.getCurrentPosition((position) => {
+      const {coords: {latitude, longitude}} = position;
+      const locationQueryString = `lat=${latitude}&lon=${longitude}`;
+      this.fetchData(locationQueryString);
+    }, (error) => {
+      console.error(error);
+    }, options);
   };
 
-  fetchWeatherData = async () => {
-    this.setLoading(true);
+  fetchData = async (locationQueryString) => {
     try {
-      let locationQueryString;
-      if('geolocation' in navigator) {
-        // geolocation is available
-        const {coords: {latitude, longitude}} = await this.getCurrentLocation();
-        locationQueryString = `lat=${latitude}&lon=${longitude}`;
-      } else {
-        // geolocation IS NOT available
-        locationQueryString = 'q=London';
-      }
       const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://openweathermap.org/data/2.5/forecast/hourly?${locationQueryString}&appid=${API_KEY}`);
       const data = response.data;
       this.setCurrentCity(data.city.name);
@@ -171,10 +165,19 @@ class WeatherPage {
     } catch(e) {
       console.error(e);
       this.setError(e);
-    } finally {
-      this.setLoading(false);
     }
-  }
+  };
+
+  fetchWeatherData = async () => {
+    this.setLoading(true);
+    if('geolocation' in navigator) {
+      // geolocation is available
+      this.getCurrentLocation();
+    }
+    const locationQueryString = 'q=London';
+    await this.fetchData(locationQueryString);
+    this.setLoading(false);
+  };
 };
 
 export default WeatherPage;
