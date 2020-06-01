@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const SpinnerContainer = styled.div`
+export const SpinnerErrorContainer = styled.div`
   height: 100%;
   padding: 50px;
   display: flex;
@@ -11,7 +11,6 @@ export const SpinnerContainer = styled.div`
 `;
 
 export const PageContainer = styled.div`
-  height: 100%;
   padding: 50px;
   display: flex;
   flex-direction: column;
@@ -19,6 +18,7 @@ export const PageContainer = styled.div`
 `;
 
 export const SectionHeader = styled.div`
+  margin-top: 20px;
   text-align: center;
   font-size: xxx-large;
 `;

@@ -17,5 +17,6 @@ export const Title = styled.div`
 `;
 
 export const Description = styled.div`
+  text-align: center;
   font-size: xx-large;
 `;

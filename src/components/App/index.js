@@ -8,7 +8,7 @@ import Metric from 'Components/Metric';
 import LineChart from 'Components/LineChart';
 
 import {
-  SpinnerContainer,
+  SpinnerErrorContainer,
   PageContainer,
   SectionHeader,
   CurrentContainer,
@@ -29,6 +29,7 @@ class App extends Component {
   render() {
     const {
       loading,
+      error,
       currentInfo,
       todayInfo,
       nextInfo,
@@ -38,11 +39,19 @@ class App extends Component {
       setNextLineChartType
     } = this.props.store.weatherPage;
     
+    if(error) {
+      return (
+        <SpinnerErrorContainer>
+          <div>{error}</div>
+        </SpinnerErrorContainer>
+      );
+    }
+    
     if(loading || isEmpty(currentInfo)) {
       return (
-        <SpinnerContainer>
+        <SpinnerErrorContainer>
           <Spin />
-        </SpinnerContainer>
+        </SpinnerErrorContainer>
       );
     }
     
