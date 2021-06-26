@@ -2,6 +2,10 @@ Frontend Coding Challenge Hopkins
 =================
 This challenge is about building a small interface that shows the weather for the next 3 days. As a user I would want to be able to use it to get the following information.
 
+### Demo
+
+https://mk-weather-forecast.herokuapp.com/
+
 ### Requirements
 1. In the morning I want to check the weather for today to make sure that I can dress accordingly.
 2. Sometimes, when I leave home for the weekend, I want to make sure that it's not too windy, as I have sensitive plants on my balcony that I would have to put into my flat otherwise.
