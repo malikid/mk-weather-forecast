@@ -70,6 +70,7 @@ class WeatherPage {
 
     const {
       temperature_2m: temp,
+      apparent_temperature: apparentTemp,
       relative_humidity_2m: humidity,
       cloud_cover: clouds,
       wind_speed_10m: windSpeed,
@@ -84,6 +85,7 @@ class WeatherPage {
       detailDescription: '',
       icon,
       temp: temp == null ? wordingForNoInfo : `${Math.round(temp)}°C`,
+      feelsLike: apparentTemp == null ? '' : `Feels like ${Math.round(apparentTemp)}°C`,
       humidity: humidity == null ? wordingForNoInfo : `${humidity}%`,
       clouds: clouds == null ? wordingForNoInfo : `${clouds}%`,
       wind: {
@@ -103,10 +105,18 @@ class WeatherPage {
     return reduce(infoList, (result, hourlyInfo) => {
       const datetime = moment(hourlyInfo.time).format('MMM D HH[h]');
 
-      result.temp.data.push({
-        datetime,
-        temp: hourlyInfo.temperature_2m
-      });
+      result.temp.data.push(
+        {
+          datetime,
+          metric: 'Temperature',
+          value: hourlyInfo.temperature_2m,
+        },
+        {
+          datetime,
+          metric: 'Apparent temperature',
+          value: hourlyInfo.apparent_temperature,
+        }
+      );
       result.humidity.data.push({
         datetime,
         humidity: hourlyInfo.relative_humidity_2m
@@ -121,7 +131,11 @@ class WeatherPage {
       });
       return result;
     }, {
-      temp: this.generateBaseConfig('temp'),
+      temp: {
+        ...this.generateBaseConfig('value'),
+        seriesField: 'metric',
+        legend: { position: 'top' },
+      },
       humidity: this.generateBaseConfig('humidity'),
       clouds: this.generateBaseConfig('clouds'),
       wind: this.generateBaseConfig('wind')
@@ -174,8 +188,8 @@ class WeatherPage {
       params: {
         latitude,
         longitude,
-        current: 'temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code',
-        hourly: 'temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m',
+        current: 'temperature_2m,apparent_temperature,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code',
+        hourly: 'temperature_2m,apparent_temperature,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m',
         forecast_hours: 96,
         timezone: 'auto',
         temperature_unit: 'celsius',
@@ -186,6 +200,7 @@ class WeatherPage {
     const hourlyInfoList = hourly.time.map((time, index) => ({
       time,
       temperature_2m: hourly.temperature_2m[index],
+      apparent_temperature: hourly.apparent_temperature[index],
       relative_humidity_2m: hourly.relative_humidity_2m[index],
       cloud_cover: hourly.cloud_cover[index],
       wind_speed_10m: hourly.wind_speed_10m[index],

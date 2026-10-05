@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {inject, observer} from 'mobx-react';
-import {Spin} from 'antd';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { Spin } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 
 import CurrentStatus from 'Components/CurrentStatus';
@@ -38,42 +38,48 @@ class App extends Component {
       setTodayLineChartType,
       setNextLineChartType
     } = this.props.store.weatherPage;
-    
-    if(error) {
+
+    if (error) {
       return (
         <SpinnerErrorContainer>
           <div>Something went wrong...</div>
         </SpinnerErrorContainer>
       );
     }
-    
-    if(loading || isEmpty(currentInfo)) {
+
+    if (loading || isEmpty(currentInfo)) {
       return (
         <SpinnerErrorContainer>
           <Spin />
         </SpinnerErrorContainer>
       );
     }
-    
+
     const {
       mainDescription,
       detailDescription,
       icon,
       temp,
+      feelsLike,
       humidity,
       clouds,
       wind
     } = currentInfo;
-    
+
     return (
       <PageContainer>
         <SectionHeader>WEATHER NOW</SectionHeader>
         <CurrentContainer>
           <Column>
-            <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon}/>
+            <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon} />
           </Column>
           <Column>
-            <Metric title={'Temperature'} description={temp} />
+            <Metric
+              title={'Temperature'}
+              description={temp}
+              subDescription={feelsLike}
+              subDescriptionAlign="right"
+            />
             <Metric title={'Humidity'} description={humidity} />
           </Column>
           <Column>

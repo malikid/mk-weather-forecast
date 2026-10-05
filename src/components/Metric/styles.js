@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Card} from 'Styles/general';
+import { Card } from 'Styles/general';
 
 export const Container = styled(Card)`
   min-width: 100px;
@@ -19,4 +19,11 @@ export const Title = styled.div`
 export const Description = styled.div`
   text-align: center;
   font-size: xx-large;
+`;
+
+export const SubDescription = styled.div`
+  width: 100%;
+  color: #666;
+  text-align: ${props => props.align || 'center'};
+  font-size: small;
 `;
