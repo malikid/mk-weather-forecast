@@ -102,9 +102,16 @@ class WeatherPage {
     };
   }
 
-  generateBaseConfig = (type) => {
+  generateBaseConfig = (type, label, unit) => {
     let config = cloneDeep(this.defaultLineChartConfig);
     config.yField = type;
+    config.tooltip = {
+      formatter: (date, value, tooltipLabel) => ({
+        title: date,
+        name: `${label || tooltipLabel} (${unit})`,
+        value,
+      }),
+    };
     return config;
   };
 
@@ -150,12 +157,19 @@ class WeatherPage {
         ...this.generateBaseConfig('value'),
         seriesField: 'metric',
         legend: { position: 'top-right' },
+        tooltip: {
+          formatter: (date, value, label) => ({
+            title: date,
+            name: `${label === 'Apparent temperature' ? 'Apparent Temperature' : 'Temperature'} (°C)`,
+            value,
+          }),
+        },
       },
-      humidity: this.generateBaseConfig('humidity'),
-      clouds: this.generateBaseConfig('clouds'),
-      wind: this.generateBaseConfig('wind'),
-      rain: this.generateBaseConfig('rain'),
-      rainChance: this.generateBaseConfig('rainChance'),
+      humidity: this.generateBaseConfig('humidity', 'Humidity', '%'),
+      clouds: this.generateBaseConfig('clouds', 'Cloud Cover', '%'),
+      wind: this.generateBaseConfig('wind', 'Wind Speed', 'm/s'),
+      rain: this.generateBaseConfig('rain', 'Rain', 'mm'),
+      rainChance: this.generateBaseConfig('rainChance', 'Rain Chance', '%'),
     });
   };
 

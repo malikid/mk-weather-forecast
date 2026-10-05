@@ -14,10 +14,10 @@ class LineChart extends Component {
       <Card>
         <RadioContainer>
           <Radio.Group onChange={(e) => { onTypeChange(e.target.value) }} defaultValue="temp">
-            <Radio.Button value="temp">Temperature</Radio.Button>
-            <Radio.Button value="humidity">Humidity</Radio.Button>
-            <Radio.Button value="clouds">Clouds</Radio.Button>
-            <Radio.Button value="wind">Wind</Radio.Button>
+            <Radio.Button value="temp">Temperature (°C)</Radio.Button>
+            <Radio.Button value="humidity">Humidity (%)</Radio.Button>
+            <Radio.Button value="clouds">Clouds (%)</Radio.Button>
+            <Radio.Button value="wind">Wind (m/s)</Radio.Button>
             <Radio.Button value="rain">Rain (mm)</Radio.Button>
             <Radio.Button value="rainChance">Rain chance (%)</Radio.Button>
           </Radio.Group>
