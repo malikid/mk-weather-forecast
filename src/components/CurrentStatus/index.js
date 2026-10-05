@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
-import {Spin} from 'antd';
 import {Container, WeatherIcon, WeatherDescription, WeatherDetail} from './styles';
 
 @inject('store')
@@ -15,7 +14,7 @@ class CurrentStatus extends Component {
     
     return (
       <Container>
-        <WeatherIcon src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
+        <WeatherIcon aria-hidden="true">{icon}</WeatherIcon>
         <WeatherDescription>{mainDescription}</WeatherDescription>
         {detailDescription && <WeatherDetail>{detailDescription}</WeatherDetail>}
       </Container>

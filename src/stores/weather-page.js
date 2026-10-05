@@ -1,9 +1,40 @@
-import {observable, action, computed} from 'mobx';
+import { observable, action, computed } from 'mobx';
 import axios from 'axios';
-import {reduce, isEmpty, slice, cloneDeep, map} from 'lodash';
+import { reduce, isEmpty, slice, cloneDeep } from 'lodash';
 import moment from 'moment';
 
-import {API_KEY} from 'Config';
+const WEATHER_CONDITIONS = {
+  0: ['Clear sky', '☀️'],
+  1: ['Mainly clear', '🌤️'],
+  2: ['Partly cloudy', '⛅'],
+  3: ['Overcast', '☁️'],
+  45: ['Fog', '🌫️'],
+  48: ['Depositing rime fog', '🌫️'],
+  51: ['Light drizzle', '🌦️'],
+  53: ['Moderate drizzle', '🌦️'],
+  55: ['Dense drizzle', '🌧️'],
+  56: ['Light freezing drizzle', '🌧️'],
+  57: ['Dense freezing drizzle', '🌧️'],
+  61: ['Slight rain', '🌧️'],
+  63: ['Moderate rain', '🌧️'],
+  65: ['Heavy rain', '🌧️'],
+  66: ['Light freezing rain', '🌧️'],
+  67: ['Heavy freezing rain', '🌧️'],
+  71: ['Slight snowfall', '🌨️'],
+  73: ['Moderate snowfall', '🌨️'],
+  75: ['Heavy snowfall', '❄️'],
+  77: ['Snow grains', '❄️'],
+  80: ['Slight rain showers', '🌦️'],
+  81: ['Moderate rain showers', '🌧️'],
+  82: ['Violent rain showers', '🌧️'],
+  85: ['Slight snow showers', '🌨️'],
+  86: ['Heavy snow showers', '❄️'],
+  95: ['Thunderstorm', '⛈️'],
+  96: ['Thunderstorm with slight hail', '⛈️'],
+  99: ['Thunderstorm with heavy hail', '⛈️'],
+};
+
+const describeWeather = (code) => WEATHER_CONDITIONS[code] || ['Unknown conditions', ''];
 
 class WeatherPage {
   defaultLineChartConfig = {
@@ -26,41 +57,38 @@ class WeatherPage {
   @observable loading = false;
   @observable error;
   @observable currentCity;
+  @observable currentWeather;
   @observable hourlyInfoList = [];
   @observable todayLineChartType = 'temp';
   @observable nextLineChartType = 'temp';
 
   @computed
   get currentInfo() {
-    if(isEmpty(this.hourlyInfoList)) {
+    if (!this.currentWeather) {
       return {};
     }
-    
+
     const {
-      main: {
-        temp,
-        humidity,
-      },
-      weather,
-      clouds,
-      wind,
-    } = this.hourlyInfoList[0];
-    const {main, description, icon} = weather[0];
-    
-    const hasCloudsInfo = !isEmpty(clouds);
-    const hasWindInfo = !isEmpty(wind);
+      temperature_2m: temp,
+      relative_humidity_2m: humidity,
+      cloud_cover: clouds,
+      wind_speed_10m: windSpeed,
+      wind_direction_10m: windDirection,
+      weather_code: weatherCode,
+    } = this.currentWeather;
+    const [description, icon] = describeWeather(weatherCode);
     const wordingForNoInfo = 'No Info';
-    
+
     return {
-      mainDescription: main,
-      detailDescription: description,
+      mainDescription: description,
+      detailDescription: '',
       icon,
-      temp: `${temp}°C`,
-      humidity: `${humidity}%`,
-      clouds: hasCloudsInfo ? `${clouds.all}%` : wordingForNoInfo,
+      temp: temp == null ? wordingForNoInfo : `${Math.round(temp)}°C`,
+      humidity: humidity == null ? wordingForNoInfo : `${humidity}%`,
+      clouds: clouds == null ? wordingForNoInfo : `${clouds}%`,
       wind: {
-        speed: hasWindInfo ? `${wind.speed} meter/sec` : wordingForNoInfo,
-        degree: hasWindInfo ? `${wind.degree} degrees` : wordingForNoInfo
+        speed: windSpeed == null ? wordingForNoInfo : `${windSpeed} m/s`,
+        degree: windDirection == null ? wordingForNoInfo : `${windDirection} degrees`,
       }
     };
   }
@@ -73,23 +101,23 @@ class WeatherPage {
 
   transformInfoListToLineChartConfigs = (infoList) => {
     return reduce(infoList, (result, hourlyInfo) => {
-      const datetime = moment(hourlyInfo.dt, 'X').format('MMM D HH[h]');
-      
+      const datetime = moment(hourlyInfo.time).format('MMM D HH[h]');
+
       result.temp.data.push({
         datetime,
-        temp: hourlyInfo.main.temp
+        temp: hourlyInfo.temperature_2m
       });
       result.humidity.data.push({
         datetime,
-        humidity: hourlyInfo.main.humidity
+        humidity: hourlyInfo.relative_humidity_2m
       });
       result.clouds.data.push({
         datetime,
-        clouds: hourlyInfo.clouds.all
+        clouds: hourlyInfo.cloud_cover
       });
       result.wind.data.push({
         datetime,
-        wind: hourlyInfo.wind.speed
+        wind: hourlyInfo.wind_speed_10m
       });
       return result;
     }, {
@@ -102,7 +130,7 @@ class WeatherPage {
 
   @computed
   get todayInfo() {
-    if(isEmpty(this.hourlyInfoList)) {
+    if (isEmpty(this.hourlyInfoList)) {
       return {};
     }
 
@@ -112,7 +140,7 @@ class WeatherPage {
 
   @computed
   get nextInfo() {
-    if(isEmpty(this.hourlyInfoList)) {
+    if (isEmpty(this.hourlyInfoList)) {
       return {};
     }
 
@@ -130,16 +158,10 @@ class WeatherPage {
   setCurrentCity = (value) => (this.currentCity = value);
 
   @action
-  setCurrentInfo = (value) => (this.currentInfo = value);
+  setCurrentWeather = (value) => (this.currentWeather = value);
 
   @action
-  setHourlyInfoList = (list) => {
-    this.hourlyInfoList = map(list, item => {
-      const temp = parseInt(item.main.temp);
-      item.main.temp = temp > 200 ? Math.trunc(parseInt(item.main.temp) - 273.15) : temp;
-      return item;
-    });
-  };
+  setHourlyInfoList = (list) => (this.hourlyInfoList = list);
 
   @action
   setTodayLineChartType = (type) => (this.todayLineChartType = type);
@@ -147,37 +169,64 @@ class WeatherPage {
   @action
   setNextLineChartType = (type) => (this.nextLineChartType = type);
 
-  getCurrentLocation = (options = []) => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const {coords: {latitude, longitude}} = position;
-      const locationQueryString = `lat=${latitude}&lon=${longitude}`;
-      this.fetchData(locationQueryString);
-    }, (error) => {
-      console.error(error);
-    }, options);
-  };
+  fetchData = async (latitude, longitude, city) => {
+    const response = await axios.get('https://api.open-meteo.com/v1/forecast', {
+      params: {
+        latitude,
+        longitude,
+        current: 'temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code',
+        hourly: 'temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m',
+        forecast_hours: 96,
+        timezone: 'auto',
+        temperature_unit: 'celsius',
+        wind_speed_unit: 'ms',
+      },
+    });
+    const { current, hourly } = response.data;
+    const hourlyInfoList = hourly.time.map((time, index) => ({
+      time,
+      temperature_2m: hourly.temperature_2m[index],
+      relative_humidity_2m: hourly.relative_humidity_2m[index],
+      cloud_cover: hourly.cloud_cover[index],
+      wind_speed_10m: hourly.wind_speed_10m[index],
+    }));
 
-  fetchData = async (locationQueryString) => {
-    try {
-      const response = await axios.get(`https://openweathermap.org/data/2.5/forecast/hourly?${locationQueryString}&appid=${API_KEY}`);
-      const data = response.data;
-      this.setCurrentCity(data.city.name);
-      this.setHourlyInfoList(data.list);
-    } catch(e) {
-      console.error(e);
-      this.setError(e);
-    }
+    this.setCurrentCity(city);
+    this.setCurrentWeather(current);
+    this.setHourlyInfoList(hourlyInfoList);
   };
 
   fetchWeatherData = async () => {
     this.setLoading(true);
-    if('geolocation' in navigator) {
-      // geolocation is available
-      this.getCurrentLocation();
+    this.setError(null);
+    let latitude = 51.5072;
+    let longitude = -0.1276;
+    let city = 'London';
+
+    if ('geolocation' in navigator) {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            maximumAge: 600000,
+            timeout: 10000,
+          });
+        });
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        city = 'Current location';
+      } catch (error) {
+        console.warn('Unable to determine location; using London.', error);
+      }
     }
-    const locationQueryString = 'q=London';
-    await this.fetchData(locationQueryString);
-    this.setLoading(false);
+
+    try {
+      await this.fetchData(latitude, longitude, city);
+    } catch (error) {
+      console.error(error);
+      this.setError(error);
+    } finally {
+      this.setLoading(false);
+    }
   };
 };
 
