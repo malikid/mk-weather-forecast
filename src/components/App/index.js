@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Spin } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
 import isEmpty from 'lodash/isEmpty';
 
 import CurrentStatus from 'Components/CurrentStatus';
@@ -10,6 +11,10 @@ import LineChart from 'Components/LineChart';
 import {
   SpinnerErrorContainer,
   PageContainer,
+  WeatherNowRow,
+  WeatherNowTitle,
+  LocationLabel,
+  LocationAttribution,
   SectionHeader,
   CurrentContainer,
   CurrentStatusContainer,
@@ -30,6 +35,7 @@ class App extends Component {
     const {
       loading,
       error,
+      currentCity,
       currentInfo,
       todayInfo,
       nextInfo,
@@ -69,7 +75,13 @@ class App extends Component {
 
     return (
       <PageContainer>
-        <SectionHeader>WEATHER NOW</SectionHeader>
+        <WeatherNowRow>
+          <WeatherNowTitle>WEATHER NOW</WeatherNowTitle>
+          <LocationLabel>
+            <EnvironmentOutlined aria-hidden="true" />
+            <span>{currentCity || 'Your location'}</span>
+          </LocationLabel>
+        </WeatherNowRow>
         <CurrentContainer>
           <Column>
             <CurrentStatus mainDescription={mainDescription} detailDescription={detailDescription} icon={icon} />
@@ -117,6 +129,7 @@ class App extends Component {
             onTypeChange={setNextLineChartType}
           />
         </NextContainer>
+        <LocationAttribution>Place names © OpenStreetMap contributors</LocationAttribution>
       </PageContainer>
     );
   }

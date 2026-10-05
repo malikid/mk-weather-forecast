@@ -224,6 +224,28 @@ class WeatherPage {
   @action
   setNextLineChartType = (type) => (this.nextLineChartType = type);
 
+  getCityName = async (latitude, longitude) => {
+    try {
+      const response = await axios.get('https://nominatim.openstreetmap.org/reverse', {
+        params: {
+          lat: latitude,
+          lon: longitude,
+          format: 'jsonv2',
+          addressdetails: 1,
+          'accept-language': 'en',
+        },
+      });
+      const address = response.data.address || {};
+      const city = address.city || address.town || address.village || address.municipality ||
+        address.hamlet || address.suburb || address.city_district;
+      const countryCode = address.country_code && address.country_code.toUpperCase();
+      return city && countryCode ? `${city}, ${countryCode}` : city || 'Your location';
+    } catch (error) {
+      console.warn('Unable to resolve city name.', error);
+      return 'Your location';
+    }
+  };
+
   fetchData = async (latitude, longitude, city) => {
     const response = await axios.get('https://api.open-meteo.com/v1/forecast', {
       params: {
@@ -261,7 +283,7 @@ class WeatherPage {
     this.setError(null);
     let latitude = 51.5072;
     let longitude = -0.1276;
-    let city = 'London';
+    let city = 'London, GB';
 
     if ('geolocation' in navigator) {
       try {
@@ -273,7 +295,7 @@ class WeatherPage {
         });
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-        city = 'Current location';
+        city = await this.getCityName(latitude, longitude);
       } catch (error) {
         console.warn('Unable to determine location; using London.', error);
       }
