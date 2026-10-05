@@ -21,6 +21,14 @@ export const Description = styled.div`
   font-size: xx-large;
 `;
 
+export const DirectionArrow = styled.span`
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 1.2em;
+  line-height: 1;
+  vertical-align: middle;
+`;
+
 export const SubDescription = styled.div`
   width: 100%;
   color: #666;

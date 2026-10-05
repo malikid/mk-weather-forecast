@@ -93,7 +93,12 @@ class App extends Component {
           </Column>
           <Column>
             <Metric title={'Clouds'} description={clouds} />
-            <Metric title={'Wind'} description={wind.speed} subDescription={wind.degree} />
+            <Metric
+              title={'Wind'}
+              description={wind.speed}
+              subDescription={wind.degree}
+              arrowDegrees={wind.arrowDegrees}
+            />
           </Column>
         </CurrentContainer>
         <SectionHeader>WEATHER TODAY</SectionHeader>

@@ -35,6 +35,12 @@ const WEATHER_CONDITIONS = {
 };
 
 const describeWeather = (code) => WEATHER_CONDITIONS[code] || ['Unknown conditions', ''];
+const COMPASS_DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+const getCompassDirection = (degrees) => {
+  const normalizedDegrees = ((degrees % 360) + 360) % 360;
+  return COMPASS_DIRECTIONS[Math.round(normalizedDegrees / 45) % COMPASS_DIRECTIONS.length];
+};
 
 class WeatherPage {
   defaultLineChartConfig = {
@@ -93,7 +99,8 @@ class WeatherPage {
       clouds: clouds == null ? wordingForNoInfo : `${clouds}%`,
       wind: {
         speed: windSpeed == null ? wordingForNoInfo : `${windSpeed} m/s`,
-        degree: windDirection == null ? wordingForNoInfo : `${windDirection} degrees`,
+        degree: windDirection == null ? '' : `From ${getCompassDirection(windDirection)} · ${Math.round(windDirection)}°`,
+        arrowDegrees: windDirection == null ? null : (windDirection + 180) % 360,
       },
       rain: rainSum == null && rainChance == null ? null : {
         total: rainSum == null ? '' : `${Math.round(rainSum * 10) / 10} mm`,
