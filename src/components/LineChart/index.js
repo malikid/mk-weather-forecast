@@ -1,23 +1,25 @@
-import React, {Component} from 'react';
-import {observer} from 'mobx-react';
-import {Line} from '@ant-design/charts';
-import {Radio} from 'antd';
-import {Card} from 'Styles/general';
-import {RadioContainer} from './styles';
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+import { Line } from '@ant-design/charts';
+import { Radio } from 'antd';
+import { Card } from 'Styles/general';
+import { RadioContainer } from './styles';
 
 @observer
 class LineChart extends Component {
   render() {
-    const {type, config, onTypeChange} = this.props;
-    
+    const { type, config, onTypeChange } = this.props;
+
     return (
       <Card>
         <RadioContainer>
-          <Radio.Group onChange={(e) => {onTypeChange(e.target.value)}} defaultValue="temp">
+          <Radio.Group onChange={(e) => { onTypeChange(e.target.value) }} defaultValue="temp">
             <Radio.Button value="temp">Temperature</Radio.Button>
             <Radio.Button value="humidity">Humidity</Radio.Button>
             <Radio.Button value="clouds">Clouds</Radio.Button>
             <Radio.Button value="wind">Wind</Radio.Button>
+            <Radio.Button value="rain">Rain (mm)</Radio.Button>
+            <Radio.Button value="rainChance">Rain chance (%)</Radio.Button>
           </Radio.Group>
         </RadioContainer>
         <Line {...config[type]} />

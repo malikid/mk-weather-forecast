@@ -63,7 +63,8 @@ class App extends Component {
       feelsLike,
       humidity,
       clouds,
-      wind
+      wind,
+      rain,
     } = currentInfo;
 
     return (
@@ -81,6 +82,14 @@ class App extends Component {
               subDescriptionAlign="right"
             />
             <Metric title={'Humidity'} description={humidity} />
+            {rain && (
+              <Metric
+                title={'Rain today'}
+                description={rain.total || rain.chance}
+                subDescription={rain.total ? rain.chance : ''}
+                subDescriptionAlign="right"
+              />
+            )}
           </Column>
           <Column>
             <Metric title={'Clouds'} description={clouds} />

@@ -10,4 +10,8 @@ export const Title = styled.div`
 `;
 
 export const RadioContainer = styled.div`
+  .ant-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;

@@ -58,6 +58,7 @@ class WeatherPage {
   @observable error;
   @observable currentCity;
   @observable currentWeather;
+  @observable dailyWeather;
   @observable hourlyInfoList = [];
   @observable todayLineChartType = 'temp';
   @observable nextLineChartType = 'temp';
@@ -77,6 +78,8 @@ class WeatherPage {
       wind_direction_10m: windDirection,
       weather_code: weatherCode,
     } = this.currentWeather;
+    const rainSum = this.dailyWeather && this.dailyWeather.rain_sum[0];
+    const rainChance = this.dailyWeather && this.dailyWeather.precipitation_probability_max[0];
     const [description, icon] = describeWeather(weatherCode);
     const wordingForNoInfo = 'No Info';
 
@@ -91,7 +94,11 @@ class WeatherPage {
       wind: {
         speed: windSpeed == null ? wordingForNoInfo : `${windSpeed} m/s`,
         degree: windDirection == null ? wordingForNoInfo : `${windDirection} degrees`,
-      }
+      },
+      rain: rainSum == null && rainChance == null ? null : {
+        total: rainSum == null ? '' : `${Math.round(rainSum * 10) / 10} mm`,
+        chance: rainChance == null ? '' : `Up to ${rainChance}% chance`,
+      },
     };
   }
 
@@ -129,16 +136,26 @@ class WeatherPage {
         datetime,
         wind: hourlyInfo.wind_speed_10m
       });
+      result.rain.data.push({
+        datetime,
+        rain: hourlyInfo.rain,
+      });
+      result.rainChance.data.push({
+        datetime,
+        rainChance: hourlyInfo.precipitation_probability,
+      });
       return result;
     }, {
       temp: {
         ...this.generateBaseConfig('value'),
         seriesField: 'metric',
-        legend: { position: 'top' },
+        legend: { position: 'top-right' },
       },
       humidity: this.generateBaseConfig('humidity'),
       clouds: this.generateBaseConfig('clouds'),
-      wind: this.generateBaseConfig('wind')
+      wind: this.generateBaseConfig('wind'),
+      rain: this.generateBaseConfig('rain'),
+      rainChance: this.generateBaseConfig('rainChance'),
     });
   };
 
@@ -175,6 +192,9 @@ class WeatherPage {
   setCurrentWeather = (value) => (this.currentWeather = value);
 
   @action
+  setDailyWeather = (value) => (this.dailyWeather = value);
+
+  @action
   setHourlyInfoList = (list) => (this.hourlyInfoList = list);
 
   @action
@@ -189,14 +209,15 @@ class WeatherPage {
         latitude,
         longitude,
         current: 'temperature_2m,apparent_temperature,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code',
-        hourly: 'temperature_2m,apparent_temperature,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m',
+        hourly: 'temperature_2m,apparent_temperature,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m,rain,precipitation_probability',
+        daily: 'rain_sum,precipitation_probability_max',
         forecast_hours: 96,
         timezone: 'auto',
         temperature_unit: 'celsius',
         wind_speed_unit: 'ms',
       },
     });
-    const { current, hourly } = response.data;
+    const { current, daily, hourly } = response.data;
     const hourlyInfoList = hourly.time.map((time, index) => ({
       time,
       temperature_2m: hourly.temperature_2m[index],
@@ -204,10 +225,13 @@ class WeatherPage {
       relative_humidity_2m: hourly.relative_humidity_2m[index],
       cloud_cover: hourly.cloud_cover[index],
       wind_speed_10m: hourly.wind_speed_10m[index],
+      rain: hourly.rain[index],
+      precipitation_probability: hourly.precipitation_probability[index],
     }));
 
     this.setCurrentCity(city);
     this.setCurrentWeather(current);
+    this.setDailyWeather(daily);
     this.setHourlyInfoList(hourlyInfoList);
   };
 
